@@ -1,2 +1,2 @@
-# java-advaned
+# Java Advanced
 Learning Spring Framework
