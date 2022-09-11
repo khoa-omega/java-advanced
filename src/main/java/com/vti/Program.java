@@ -7,6 +7,7 @@ import com.vti.entity.Shape;
 //  SOLID Principles
 //  L: Liskov substitution principle
 //  - Các subclasses có thể thay thế superclasses mà không làm thay đổi tính đúng đắn
+//  => Sử dụng tính chất đa hình
 public class Program {
     public static void main(String[] args) {
         showInfo(new Circle("Circle", 10.0));
