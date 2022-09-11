@@ -13,20 +13,21 @@ public class Department {
     @Column(name = "name", length = 50, unique = true, nullable = false)
     private String name;
 
+    @Column(name = "total_members", nullable = false)
+    private int totalMembers;
+
     public Department() {
     }
 
-    public Department(int id) {
-        this.id = id;
+    public Department(String name, int totalMembers) {
+        this.name = name;
+        this.totalMembers = totalMembers;
     }
 
-    public Department(String name) {
-        this.name = name;
-    }
-
-    public Department(int id, String name) {
+    public Department(int id, String name, int totalMembers) {
         this.id = id;
         this.name = name;
+        this.totalMembers = totalMembers;
     }
 
     public int getId() {
@@ -45,11 +46,20 @@ public class Department {
         this.name = name;
     }
 
+    public int getTotalMembers() {
+        return totalMembers;
+    }
+
+    public void setTotalMembers(int totalMembers) {
+        this.totalMembers = totalMembers;
+    }
+
     @Override
     public String toString() {
         return "Department{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
+                ", totalMembers=" + totalMembers +
                 '}';
     }
 }
