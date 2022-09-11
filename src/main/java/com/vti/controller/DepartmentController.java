@@ -5,9 +5,9 @@ import com.vti.form.DepartmentCreateForm;
 import com.vti.form.DepartmentUpdateForm;
 import com.vti.service.IDepartmentService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/v1/departments")
@@ -16,8 +16,8 @@ public class DepartmentController {
     private IDepartmentService service;
 
     @GetMapping
-    public Page<Department> findAll(Pageable pageable) {
-        return service.findAll(pageable);
+    public List<Department> findAll() {
+        return service.findAll();
     }
 
     @GetMapping("/{id}")

@@ -5,9 +5,9 @@ import com.vti.form.AccountCreateForm;
 import com.vti.form.AccountUpdateForm;
 import com.vti.service.IAccountService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping(value = "api/v1/accounts")
@@ -16,8 +16,8 @@ public class AccountController {
     private IAccountService service;
 
     @GetMapping
-    public Page<Account> findAll(Pageable pageable) {
-        return service.findAll(pageable);
+    public List<Account> findAll() {
+        return service.findAll();
     }
 
     @GetMapping("/{id}")
