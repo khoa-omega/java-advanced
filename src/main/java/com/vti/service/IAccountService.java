@@ -1,11 +1,11 @@
 package com.vti.service;
 
 import com.vti.entity.Account;
-
-import java.util.List;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 public interface IAccountService {
-    List<Account> findAll();
+    Page<Account> findAll(Pageable pageable);
 
     Account findById(int id);
 

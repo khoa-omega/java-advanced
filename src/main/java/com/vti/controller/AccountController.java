@@ -8,6 +8,9 @@ import com.vti.service.IAccountService;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.TypeToken;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -22,11 +25,15 @@ public class AccountController {
     private ModelMapper mapper;
 
     @GetMapping
-    public List<AccountDTO> findAll() {
-        List<Account> accounts = service.findAll();
-        return mapper.map(accounts, new TypeToken<List<AccountDTO>>() {
-        }.getType());
+    public Page<AccountDTO> findAll(Pageable pageable) {
+        Page<Account> accounts = service.findAll(pageable);
+        List<AccountDTO> accountDTOs = mapper.map(
+                accounts.getContent(),
+                new TypeToken<List<AccountDTO>>() {}.getType()
+        );
+        return new PageImpl<>(accountDTOs, pageable, accounts.getTotalElements());
     }
+
 
     @GetMapping("/{id}")
     public AccountDTO findById(@PathVariable("id") int id) {

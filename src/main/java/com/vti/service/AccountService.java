@@ -3,9 +3,9 @@ package com.vti.service;
 import com.vti.entity.Account;
 import com.vti.repository.IAccountRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
 
 @Service
 public class AccountService implements IAccountService {
@@ -13,8 +13,8 @@ public class AccountService implements IAccountService {
     private IAccountRepository repository;
 
     @Override
-    public List<Account> findAll() {
-        return repository.findAll();
+    public Page<Account> findAll(Pageable pageable) {
+        return repository.findAll(pageable);
     }
 
     @Override
