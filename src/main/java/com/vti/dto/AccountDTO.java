@@ -1,15 +1,11 @@
 package com.vti.dto;
 
 import lombok.Data;
-import lombok.NonNull;
-import lombok.RequiredArgsConstructor;
+import lombok.NoArgsConstructor;
 
 @Data
-@RequiredArgsConstructor
+@NoArgsConstructor
 public class AccountDTO {
-	@NonNull
 	private String username;
-
-	@NonNull
 	private String departmentName;
 }
