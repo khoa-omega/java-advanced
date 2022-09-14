@@ -35,6 +35,16 @@ public class DepartmentController {
                 new TypeToken<List<DepartmentDTO>>() {}.getType()
         );
 
+        for (DepartmentDTO departmentDTO : departmentDTOs) {
+            departmentDTO.add(
+                    WebMvcLinkBuilder.linkTo(
+                            WebMvcLinkBuilder
+                                    .methodOn(DepartmentController.class)
+                                    .findById(departmentDTO.getId())
+                    ).withSelfRel()
+            );
+        }
+
         return new PageImpl<>(departmentDTOs, pageable, departments.getTotalElements());
     }
 

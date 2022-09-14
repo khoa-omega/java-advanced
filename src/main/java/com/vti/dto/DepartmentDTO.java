@@ -12,6 +12,8 @@ import java.util.List;
 @Data
 @NoArgsConstructor
 public class DepartmentDTO extends RepresentationModel<DepartmentDTO> {
+    private int id;
+
     private String name;
 
     private String type;
