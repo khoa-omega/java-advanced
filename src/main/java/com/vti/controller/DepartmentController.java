@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
+import org.springframework.hateoas.server.mvc.WebMvcLinkBuilder;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -40,7 +41,13 @@ public class DepartmentController {
     @GetMapping(value = "/{id}")
     public DepartmentDTO findById(@PathVariable(name = "id") int id) {
         Department entity = service.findById(id);
-        return mapper.map(entity, DepartmentDTO.class);
+        return mapper.map(entity, DepartmentDTO.class).add(
+                WebMvcLinkBuilder.linkTo(
+                        WebMvcLinkBuilder
+                                .methodOn(DepartmentController.class)
+                                .findById(id)
+                ).withSelfRel()
+        );
     }
 
     @PostMapping
