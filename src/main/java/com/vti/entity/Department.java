@@ -30,7 +30,7 @@ public class Department {
     @Convert(converter = DepartmentTypeConvert.class)
     private Type type;
 
-    @Column(name = "created_date", nullable = false)
+    @Column(name = "created_date", nullable = false, updatable = false)
     @CreationTimestamp
     private LocalDate createdDate;
 
