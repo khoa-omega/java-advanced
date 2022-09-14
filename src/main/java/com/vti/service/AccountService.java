@@ -1,19 +1,24 @@
 package com.vti.service;
 
 import com.vti.entity.Account;
+import com.vti.form.AccountCreateForm;
 import com.vti.form.AccountFilterForm;
+import com.vti.form.AccountUpdateForm;
 import com.vti.repository.IAccountRepository;
 import com.vti.specification.AccountSpecification;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
 @Service
 public class AccountService implements IAccountService {
     @Autowired
     private IAccountRepository repository;
+
+    @Autowired
+    private ModelMapper mapper;
 
     @Override
     public Page<Account> findAll(Pageable pageable, AccountFilterForm form) {
@@ -26,8 +31,13 @@ public class AccountService implements IAccountService {
     }
 
     @Override
-    public void save(Account account) {
-        repository.save(account);
+    public void create(AccountCreateForm form) {
+        repository.save(mapper.map(form, Account.class));
+    }
+
+    @Override
+    public void update(AccountUpdateForm form) {
+        repository.save(mapper.map(form, Account.class));
     }
 
     @Override

@@ -44,12 +44,13 @@ public class AccountController {
 
     @PostMapping
     public void create(@RequestBody AccountCreateForm form) {
-        service.save(form.toEntity());
+        service.create(form);
     }
 
     @PutMapping("/{id}")
     public void update(@PathVariable("id") int id, @RequestBody AccountUpdateForm form) {
-        service.save(form.toEntity(id));
+        form.setId(id);
+        service.update(form);
     }
 
     @DeleteMapping("/{id}")
