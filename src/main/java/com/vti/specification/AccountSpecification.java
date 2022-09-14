@@ -2,6 +2,7 @@ package com.vti.specification;
 
 import com.vti.entity.Account;
 import com.vti.entity.Account_;
+import com.vti.entity.Department_;
 import com.vti.form.AccountFilterForm;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.util.StringUtils;
@@ -11,9 +12,19 @@ public class AccountSpecification {
         if (form == null) {
             return null;
         }
-        return AccountSpecification.hasUsernameLike(form.getSearch())
-                .and(AccountSpecification.hasIdGreaterThanOrEqualTo(form.getMinId()))
-                .and(AccountSpecification.hasIdLessThanOrEqualTo(form.getMaxId()));
+        return hasUsernameLike(form.getSearch())
+                .or(hasDepartmentNameLike(form.getSearch()))
+                .and(hasIdGreaterThanOrEqualTo(form.getMinId()))
+                .and(hasIdLessThanOrEqualTo(form.getMaxId()));
+    }
+
+    public static Specification<Account> hasDepartmentNameLike(String value) {
+        return (root, query, builder) -> {
+            if (!StringUtils.hasText(value)) {
+                return null;
+            }
+            return builder.like(root.get(Account_.department).get(Department_.name), "%" + value.trim() + "%");
+        };
     }
 
     public static Specification<Account> hasUsernameLike(String value) {
