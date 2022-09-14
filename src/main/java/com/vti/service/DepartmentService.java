@@ -1,9 +1,11 @@
 package com.vti.service;
 
+import com.vti.entity.Account;
 import com.vti.entity.Department;
 import com.vti.form.DepartmentCreateForm;
 import com.vti.form.DepartmentFilterForm;
 import com.vti.form.DepartmentUpdateForm;
+import com.vti.repository.IAccountRepository;
 import com.vti.repository.IDepartmentRepository;
 import com.vti.specification.DepartmentSpecification;
 import org.modelmapper.ModelMapper;
@@ -12,10 +14,15 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class DepartmentService implements IDepartmentService {
     @Autowired
     private IDepartmentRepository repository;
+
+    @Autowired
+    private IAccountRepository accountRepository;
 
     @Autowired
     private ModelMapper mapper;
@@ -32,7 +39,12 @@ public class DepartmentService implements IDepartmentService {
 
     @Override
     public void create(DepartmentCreateForm form) {
-        repository.save(mapper.map(form, Department.class));
+        Department department = repository.save(mapper.map(form, Department.class));
+        List<Account> accounts = department.getAccounts();
+        for (Account account : accounts) {
+            account.setDepartment(department);
+        }
+        accountRepository.saveAll(accounts);
     }
 
     @Override
