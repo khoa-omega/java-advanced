@@ -71,12 +71,13 @@ public class DepartmentController {
 
     @PostMapping
     public void create(@RequestBody DepartmentCreateForm form) {
-        service.save(form.toEntity());
+        service.create(form);
     }
 
     @PutMapping("/{id}")
     public void update(@PathVariable("id") int id, @RequestBody DepartmentUpdateForm form) {
-        service.save(form.toEntity(id));
+        form.setId(id);
+        service.update(form);
     }
 
     @DeleteMapping("/{id}")

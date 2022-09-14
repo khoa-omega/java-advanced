@@ -1,9 +1,12 @@
 package com.vti.service;
 
 import com.vti.entity.Department;
+import com.vti.form.DepartmentCreateForm;
 import com.vti.form.DepartmentFilterForm;
+import com.vti.form.DepartmentUpdateForm;
 import com.vti.repository.IDepartmentRepository;
 import com.vti.specification.DepartmentSpecification;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -13,6 +16,9 @@ import org.springframework.stereotype.Service;
 public class DepartmentService implements IDepartmentService {
     @Autowired
     private IDepartmentRepository repository;
+
+    @Autowired
+    private ModelMapper mapper;
 
     @Override
     public Page<Department> findAll(Pageable pageable, DepartmentFilterForm form) {
@@ -25,8 +31,13 @@ public class DepartmentService implements IDepartmentService {
     }
 
     @Override
-    public void save(Department department) {
-        repository.save(department);
+    public void create(DepartmentCreateForm form) {
+        repository.save(mapper.map(form, Department.class));
+    }
+
+    @Override
+    public void update(DepartmentUpdateForm form) {
+        repository.save(mapper.map(form, Department.class));
     }
 
     @Override
