@@ -13,10 +13,13 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.hateoas.server.mvc.WebMvcLinkBuilder;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
+@Validated
 @RestController
 @RequestMapping("/api/v1/departments")
 public class DepartmentController {
@@ -70,7 +73,7 @@ public class DepartmentController {
     }
 
     @PostMapping
-    public void create(@RequestBody DepartmentCreateForm form) {
+    public void create(@Valid @RequestBody DepartmentCreateForm form) {
         service.create(form);
     }
 
