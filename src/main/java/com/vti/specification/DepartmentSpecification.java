@@ -14,7 +14,11 @@ import java.time.LocalDate;
 
 public class DepartmentSpecification {
     public static Specification<Department> buildWhere(DepartmentFilterForm form) {
-        return hasUsernameLike(form.getSearch());
+        return hasUsernameLike(form.getSearch())
+                .and(hasCreatedDateEqual(form.getCreatedDate()))
+                .and(hasCreatedDateGreaterThanOrEqualTo(form.getMinCreatedDate()))
+                .and(hasCreatedDateLessThanOrEqualTo(form.getMaxCreatedDate()))
+                .and(hasCreatedYearGreaterThanOrEqualTo(form.getMinYear()));
     }
 
     public static Specification<Department> hasUsernameLike(String value) {
@@ -54,7 +58,7 @@ public class DepartmentSpecification {
         };
     }
 
-    public static Specification<Department> hasMinYearGreaterThanOrEqualTo(Integer minYear) {
+    public static Specification<Department> hasCreatedYearGreaterThanOrEqualTo(Integer minYear) {
         return (root, query, builder) -> {
             if (minYear == null) {
                 return null;
