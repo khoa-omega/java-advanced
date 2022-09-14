@@ -7,6 +7,8 @@ import com.vti.form.AccountUpdateForm;
 import com.vti.repository.IAccountRepository;
 import com.vti.specification.AccountSpecification;
 import org.modelmapper.ModelMapper;
+import org.modelmapper.PropertyMap;
+import org.modelmapper.TypeMap;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -32,6 +34,15 @@ public class AccountService implements IAccountService {
 
     @Override
     public void create(AccountCreateForm form) {
+        TypeMap<AccountCreateForm, Account> typeMap = mapper.getTypeMap(AccountCreateForm.class, Account.class);
+        if (typeMap == null) {
+            mapper.addMappings(new PropertyMap<AccountCreateForm, Account>() {
+                @Override
+                protected void configure() {
+                    skip(destination.getId());
+                }
+            });
+        }
         repository.save(mapper.map(form, Account.class));
     }
 
