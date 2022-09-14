@@ -25,7 +25,7 @@ public class DepartmentDTO extends RepresentationModel<DepartmentDTO> {
 
     @Data
     @NoArgsConstructor
-    static class AccountDTO {
+    public static class AccountDTO extends RepresentationModel<DepartmentDTO> {
 		@JsonProperty("accountId")
         private int id;
 

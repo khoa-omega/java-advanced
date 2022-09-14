@@ -36,6 +36,15 @@ public class DepartmentController {
         );
 
         for (DepartmentDTO departmentDTO : departmentDTOs) {
+            for (DepartmentDTO.AccountDTO accountDTO : departmentDTO.getAccounts()) {
+                accountDTO.add(
+                        WebMvcLinkBuilder.linkTo(
+                                WebMvcLinkBuilder
+                                        .methodOn(AccountController.class)
+                                        .findById(accountDTO.getId())
+                        ).withSelfRel()
+                );
+            }
             departmentDTO.add(
                     WebMvcLinkBuilder.linkTo(
                             WebMvcLinkBuilder
