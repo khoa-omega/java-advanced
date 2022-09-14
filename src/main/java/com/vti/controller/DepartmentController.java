@@ -3,6 +3,7 @@ package com.vti.controller;
 import com.vti.dto.DepartmentDTO;
 import com.vti.entity.Department;
 import com.vti.form.DepartmentCreateForm;
+import com.vti.form.DepartmentFilterForm;
 import com.vti.form.DepartmentUpdateForm;
 import com.vti.service.IDepartmentService;
 import org.modelmapper.ModelMapper;
@@ -25,8 +26,8 @@ public class DepartmentController {
     private ModelMapper mapper;
 
     @GetMapping()
-    public Page<DepartmentDTO> findAll(Pageable pageable) {
-        Page<Department> departments = service.findAll(pageable);
+    public Page<DepartmentDTO> findAll(Pageable pageable, DepartmentFilterForm form) {
+        Page<Department> departments = service.findAll(pageable, form);
 
         List<DepartmentDTO> departmentDTOs = mapper.map(
                 departments.getContent(),

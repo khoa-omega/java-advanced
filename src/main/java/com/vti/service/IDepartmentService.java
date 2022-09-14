@@ -1,11 +1,12 @@
 package com.vti.service;
 
 import com.vti.entity.Department;
+import com.vti.form.DepartmentFilterForm;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
 public interface IDepartmentService {
-    Page<Department> findAll(Pageable pageable);
+    Page<Department> findAll(Pageable pageable, DepartmentFilterForm form);
 
     Department findById(int id);
 
