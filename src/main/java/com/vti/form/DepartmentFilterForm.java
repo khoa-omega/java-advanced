@@ -1,5 +1,6 @@
 package com.vti.form;
 
+import com.vti.entity.Type;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -21,4 +22,6 @@ public class DepartmentFilterForm {
     private LocalDate maxCreatedDate;
 
     private Integer minYear;
+
+    private Type type;
 }

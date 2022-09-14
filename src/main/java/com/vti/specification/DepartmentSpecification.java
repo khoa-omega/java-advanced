@@ -1,9 +1,6 @@
 package com.vti.specification;
 
-import com.vti.entity.Account;
-import com.vti.entity.Account_;
-import com.vti.entity.Department;
-import com.vti.entity.Department_;
+import com.vti.entity.*;
 import com.vti.form.DepartmentFilterForm;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.util.StringUtils;
@@ -18,7 +15,8 @@ public class DepartmentSpecification {
                 .and(hasCreatedDateEqual(form.getCreatedDate()))
                 .and(hasCreatedDateGreaterThanOrEqualTo(form.getMinCreatedDate()))
                 .and(hasCreatedDateLessThanOrEqualTo(form.getMaxCreatedDate()))
-                .and(hasCreatedYearGreaterThanOrEqualTo(form.getMinYear()));
+                .and(hasCreatedYearGreaterThanOrEqualTo(form.getMinYear()))
+                .and(hasTypeEqual(form.getType()));
     }
 
     public static Specification<Department> hasUsernameLike(String value) {
@@ -67,6 +65,15 @@ public class DepartmentSpecification {
                     builder.function("YEAR", Integer.class, root.get(Department_.createdDate)),
                     minYear
             );
+        };
+    }
+
+    public static Specification<Department> hasTypeEqual(Type type) {
+        return (root, query, builder) -> {
+            if (type == null) {
+                return null;
+            }
+            return builder.greaterThanOrEqualTo(root.get(Department_.type), type);
         };
     }
 }
