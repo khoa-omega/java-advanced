@@ -10,6 +10,8 @@ import com.vti.validation.DepartmentIDExists;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.TypeToken;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.MessageSource;
+import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
@@ -19,6 +21,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.List;
+import java.util.Locale;
 
 @Validated
 @RestController
@@ -29,6 +32,9 @@ public class DepartmentController {
 
     @Autowired
     private ModelMapper mapper;
+
+    @Autowired
+    private MessageSource messageSource;
 
     @GetMapping()
     public Page<DepartmentDTO> findAll(Pageable pageable, DepartmentFilterForm form) {
@@ -87,5 +93,32 @@ public class DepartmentController {
     @DeleteMapping("/{id}")
     public void deleteById(@PathVariable("id") int id) {
         service.deleteById(id);
+    }
+
+    @GetMapping("/messages")
+    public String testMessages(@RequestParam(value = "key") String key){
+        return messageSource.getMessage(
+                key,
+                null,
+                "Default message",
+                LocaleContextHolder.getLocale());
+    }
+
+    @GetMapping("/messages/vi")
+    public String testMessagesVi(@RequestParam(value = "key") String key){
+        return messageSource.getMessage(
+                key,
+                null,
+                "Default message",
+                new Locale("vi", "VN"));
+    }
+
+    @GetMapping("/messages/en")
+    public String testMessagesEn(@RequestParam(value = "key") String key){
+        return messageSource.getMessage(
+                key,
+                null,
+                "Default message",
+                Locale.US);
     }
 }
