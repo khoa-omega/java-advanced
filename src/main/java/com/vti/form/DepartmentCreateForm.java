@@ -26,7 +26,7 @@ public class DepartmentCreateForm {
             regexp = "DEVELOPER|TESTER|SCRUM_MASTER|PROJECT_MANAGER",
             message = "Department type must be DEVELOPER, TESTER, SCRUM_MASTER or PROJECT_MANAGER"
     )
-    private Type type;
+    private String type;
 
     private List<Account> accounts;
 
