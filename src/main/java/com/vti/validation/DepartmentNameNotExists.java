@@ -10,7 +10,7 @@ import java.lang.annotation.*;
 @Retention(RetentionPolicy.RUNTIME)
 @Repeatable(DepartmentNameNotExists.List.class)
 public @interface DepartmentNameNotExists {
-    String message() default "Department name is exists already.";
+    String message() default "{Department.createDepartment.form.name.NotExists}";
 
     Class<?>[] groups() default {};
 
