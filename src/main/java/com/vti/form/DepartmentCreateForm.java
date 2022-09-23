@@ -1,14 +1,13 @@
 package com.vti.form;
 
+import com.vti.validation.AccountUsernameNotExists;
 import com.vti.validation.DepartmentNameNotExists;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.validator.constraints.Length;
 
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Pattern;
-import javax.validation.constraints.PositiveOrZero;
+import javax.validation.Valid;
+import javax.validation.constraints.*;
 import java.util.List;
 
 @Data
@@ -29,11 +28,13 @@ public class DepartmentCreateForm {
     )
     private String type;
 
-    private List<Account> accounts;
+    @NotEmpty(message = "Account must be not empty.")
+    private List<@Valid Account> accounts;
 
     @Data
     @NoArgsConstructor
     public static class Account {
+        @AccountUsernameNotExists
         private String username;
     }
 }
