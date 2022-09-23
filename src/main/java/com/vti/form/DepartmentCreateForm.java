@@ -1,6 +1,6 @@
 package com.vti.form;
 
-import com.vti.entity.Type;
+import com.vti.validation.DepartmentNameNotExists;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.validator.constraints.Length;
@@ -16,6 +16,7 @@ import java.util.List;
 public class DepartmentCreateForm {
     @NotBlank(message = "Department name must NOT be blank")
     @Length(max = 50, message = "Department name's length is max 50 characters")
+    @DepartmentNameNotExists
     private String name;
 
     @NotNull(message = "Department total members must NOT be null")
