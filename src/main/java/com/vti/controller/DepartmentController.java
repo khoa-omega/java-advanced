@@ -6,6 +6,7 @@ import com.vti.form.DepartmentCreateForm;
 import com.vti.form.DepartmentFilterForm;
 import com.vti.form.DepartmentUpdateForm;
 import com.vti.service.IDepartmentService;
+import com.vti.validation.DepartmentIDExists;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.TypeToken;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -61,7 +62,7 @@ public class DepartmentController {
     }
 
     @GetMapping(value = "/{id}")
-    public DepartmentDTO findById(@PathVariable(name = "id") int id) {
+    public DepartmentDTO findById(@PathVariable(name = "id") @DepartmentIDExists int id) {
         Department entity = service.findById(id);
         return mapper.map(entity, DepartmentDTO.class).add(
                 WebMvcLinkBuilder.linkTo(
@@ -78,7 +79,7 @@ public class DepartmentController {
     }
 
     @PutMapping("/{id}")
-    public void update(@PathVariable("id") int id, @RequestBody DepartmentUpdateForm form) {
+    public void update(@PathVariable("id") @DepartmentIDExists int id, @RequestBody DepartmentUpdateForm form) {
         form.setId(id);
         service.update(form);
     }
