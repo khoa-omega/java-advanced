@@ -12,7 +12,12 @@ import org.modelmapper.TypeMap;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.core.userdetails.User;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
+
+import java.util.Collections;
 
 @Service
 public class AccountService implements IAccountService {
@@ -59,5 +64,23 @@ public class AccountService implements IAccountService {
     @Override
     public boolean existsById(int id) {
         return repository.existsById(id);
+    }
+
+    @Override
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        Account account = repository.findByUsername(username);
+        if (account == null) {
+            throw new UsernameNotFoundException(username);
+        }
+        return new User(
+                account.getUsername(),
+                account.getPassword(),
+                Collections.emptyList()
+        );
+    }
+
+    @Override
+    public Account findByUsername(String username) {
+        return repository.findByUsername(username);
     }
 }

@@ -1,5 +1,6 @@
 package com.vti.form;
 
+import com.vti.entity.Account;
 import com.vti.validation.AccountUsernameNotExists;
 import com.vti.validation.DepartmentNameNotExists;
 import lombok.Data;
@@ -28,7 +29,7 @@ public class DepartmentCreateForm {
     )
     private String type;
 
-    @NotEmpty(message = "Account must be not empty.")
+//    @NotEmpty(message = "Account must be not empty.")
     private List<@Valid Account> accounts;
 
     @Data
@@ -36,5 +37,9 @@ public class DepartmentCreateForm {
     public static class Account {
         @AccountUsernameNotExists
         private String username;
+        private String password;
+        private String firstName;
+        private String lastName;
+        private com.vti.entity.Account.Role role;
     }
 }
