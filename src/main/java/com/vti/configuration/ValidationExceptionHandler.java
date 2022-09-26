@@ -1,3 +1,4 @@
+/*
 package com.vti.configuration;
 
 import org.springframework.http.HttpHeaders;
@@ -46,3 +47,4 @@ public class ValidationExceptionHandler extends ResponseEntityExceptionHandler {
         return new ResponseEntity<>(errors, HttpStatus.BAD_REQUEST);
     }
 }
+*/
