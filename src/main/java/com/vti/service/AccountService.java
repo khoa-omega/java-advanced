@@ -12,6 +12,7 @@ import org.modelmapper.TypeMap;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -75,7 +76,7 @@ public class AccountService implements IAccountService {
         return new User(
                 account.getUsername(),
                 account.getPassword(),
-                Collections.emptyList()
+                AuthorityUtils.createAuthorityList(account.getRole().toString())
         );
     }
 
