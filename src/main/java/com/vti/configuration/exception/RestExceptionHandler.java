@@ -1,5 +1,6 @@
 package com.vti.configuration.exception;
 
+import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.context.i18n.LocaleContextHolder;
@@ -23,6 +24,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 @ControllerAdvice
+@Log4j2
 public class RestExceptionHandler extends ResponseEntityExceptionHandler {
     @Autowired
     private MessageSource messageSource;
@@ -40,6 +42,7 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
         String moreInformation = String.format("http://localhost:8080/api/v1/exception/%d", code);
 
         ErrorResponse response = new ErrorResponse(message, detailMessage, null, code, moreInformation);
+        log.error(detailMessage, exception);
         return new ResponseEntity<>(response, HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
@@ -56,6 +59,7 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
         String moreInformation = String.format("http://localhost:8080/api/v1/exception/%d", code);
 
         ErrorResponse response = new ErrorResponse(message, detailMessage, null, code, moreInformation);
+        log.error(detailMessage, exception);
         return new ResponseEntity<>(response, status);
     }
 
