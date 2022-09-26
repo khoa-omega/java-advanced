@@ -19,6 +19,7 @@ import org.springframework.hateoas.server.mvc.WebMvcLinkBuilder;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import javax.persistence.EntityNotFoundException;
 import javax.validation.Valid;
 import java.util.List;
 import java.util.Locale;
@@ -120,5 +121,10 @@ public class DepartmentController {
                 null,
                 "Default message",
                 Locale.US);
+    }
+
+    @GetMapping("/exception")
+    public void testException() {
+        throw new EntityNotFoundException("... Exception information");
     }
 }
