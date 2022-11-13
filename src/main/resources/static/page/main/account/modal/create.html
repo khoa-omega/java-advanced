@@ -1,0 +1,105 @@
+<div class="modal fade" id="c-modal" tabindex="-1">
+    <div class="modal-dialog modal-dialog-scrollable">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Thêm nhân viên</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <form id="c-form">
+                    <div class="mb-3">
+                        <label for="c-last-name" class="form-label fw-bold">Họ</label>
+                        <input
+                            type="text"
+                            class="form-control form-control-sm"
+                            name="c-last-name"
+                            id="c-last-name"
+                            placeholder="VD: Nguyễn Văn" />
+                        <small id="c-last-name-help" class="form-text text-muted">
+                            Họ có tối đa 50 ký tự.
+                        </small>
+                    </div>
+                    <div class="mb-3">
+                        <label for="c-first-name" class="form-label fw-bold">Tên</label>
+                        <input
+                            type="text"
+                            class="form-control form-control-sm"
+                            name="c-first-name"
+                            id="c-first-name"
+                            placeholder="VD: Khoa" />
+                        <small id="c-first-name-help" class="form-text text-muted">
+                            Tên có tối đa 50 ký tự.
+                        </small>
+                    </div>
+                    <div class="mb-3">
+                        <label for="c-username" class="form-label fw-bold">Tài khoản</label>
+                        <input
+                            type="text"
+                            class="form-control form-control-sm"
+                            name="c-username"
+                            id="c-username"
+                            placeholder="VD: khoa.nv" />
+                        <small id="c-username-help" class="form-text text-muted">
+                            Tài khoản có tối đa 50 ký tự.
+                        </small>
+                    </div>
+                    <div class="mb-3">
+                        <label for="c-password" class="form-label fw-bold">Mật khẩu</label>
+                        <input
+                            type="password"
+                            class="form-control form-control-sm"
+                            name="c-password"
+                            id="c-password"
+                            placeholder="VD: 123456" />
+                        <small id="c-password-help" class="form-text text-muted">
+                            Mật khẩu có tối đa 32 ký tự.
+                        </small>
+                    </div>
+                    <div class="mb-3">
+                        <label for="c-role" class="form-label fw-bold">Vai trò</label>
+                        <select class="form-select form-select-sm" name="c-role" id="c-role">
+                            <option value="ADMIN">ADMIN</option>
+                            <option value="MANAGER">MANAGER</option>
+                            <option value="EMPLOYEE">EMPLOYEE</option>
+                        </select>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                    Đóng
+                </button>
+                <button type="button" class="btn btn-success" onclick="createAccount();">
+                    Tạo mới
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    function createAccount() {
+        $.ajax({
+            method: 'POST',
+            url: 'http://localhost:8080/api/v1/accounts',
+            contentType: 'application/json; charset=utf-8',
+            data: JSON.stringify({
+                lastName: $('#c-last-name').val(),
+                firstName: $('#c-first-name').val(),
+                username: $('#c-username').val(),
+                password: $('#c-password').val(),
+                role: $('#c-role').val()
+            }),
+            beforeSend: () => $('#loading').show(),
+            success: data => loadAccounts(),
+            complete: () => $('#loading').hide()
+        });
+
+        bootstrap.Modal.getOrCreateInstance($('#c-modal')).hide();
+    }
+
+    $(function () {
+        const cForm = $('#c-form');
+        $('#c-modal').on('hidden.bs.modal', () => cForm.trigger('reset'));
+    });
+</script>

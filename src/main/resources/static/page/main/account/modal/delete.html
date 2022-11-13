@@ -1,0 +1,40 @@
+<div class="modal fade" id="d-modal" tabindex="-1">
+    <div class="modal-dialog modal-dialog-scrollable">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Xóa nhân viên</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">Bạn có chắc chắn muốn xóa tất cả những nhân viên được chọn không?</div>
+            <div class="modal-footer">
+                <button
+                    id="btn-delete"
+                    type="button"
+                    class="btn btn-danger"
+                    onclick="deleteAccounts();">
+                    Xóa tất cả
+                </button>
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    function deleteAccounts() {
+        const ids = $('.selected .id')
+            .toArray()
+            .map(id => id.innerText);
+
+        $.ajax({
+            method: 'DELETE',
+            url: 'http://localhost:8080/api/v1/accounts',
+            contentType: 'application/json; charset=utf-8',
+            data: JSON.stringify(ids),
+            beforeSend: () => $('#loading').show(),
+            success: data => loadAccounts(),
+            complete: () => $('#loading').hide()
+        });
+        bootstrap.Modal.getOrCreateInstance($('#d-modal')).hide();
+    }
+</script>

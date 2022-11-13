@@ -1,0 +1,98 @@
+<nav class="navbar navbar-expand-lg bg-light fixed-top">
+    <div class="container-md">
+        <a class="navbar-brand text-success fs-1 fw-bold" href="/index.html">
+            <i class="fa-solid fa-shield-cat fa-xl"></i> KShop
+        </a>
+        <button
+            class="navbar-toggler"
+            type="button"
+            data-bs-toggle="collapse"
+            data-bs-target="#navbar-supported-content">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbar-supported-content">
+            <div class="d-flex ms-auto" role="search">
+                <input
+                    id="input-search"
+                    class="form-control me-2"
+                    type="search"
+                    placeholder="Tìm kiếm"
+                    aria-label="Search" />
+                <button id="btn-search" class="col-auto btn btn-outline-success">
+                    <i class="fa-solid fa-magnifying-glass"></i>
+                </button>
+            </div>
+            <ul id="profile" class="navbar-nav mb-2 mb-lg-0 ms-5">
+                <li class="nav-item dropdown">
+                    <a
+                        class="btn nav-link dropdown-toggle text-primary fs-5"
+                        role="button"
+                        data-bs-toggle="dropdown"
+                        aria-expanded="false">
+                        <b class="full-name"></b>
+                        <span
+                            class="position-absolute top-0 start-0 translate-middle badge rounded-pill bg-danger">
+                            99+
+                        </span>
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li>
+                            <a
+                                id="btn-change-password"
+                                href="/page/auth/password/change.html"
+                                class="dropdown-item btn btn-outline-warning py-2">
+                                <i class="fa-solid fa-key me-2"></i>
+                            </a>
+                        </li>
+                        <li><hr class="dropdown-divider" /></li>
+                        <li>
+                            <a
+                                id="btn-logout"
+                                href="/api/v1/auth/logout"
+                                class="dropdown-item btn btn-outline-danger py-2">
+                                <i class="fa-solid fa-right-from-bracket me-2"></i>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+            <a
+                id="btn-login"
+                href="/page/auth/login/index.html"
+                class="btn btn-outline-primary ms-5">
+                <i class="fa-solid fa-right-to-bracket me-2"></i>
+            </a>
+            <ul class="navbar-nav mb-2 mb-lg-0 ms-5">
+                <li class="nav-item dropdown">
+                    <button
+                        id="btn-language"
+                        class="nav-link dropdown-toggle btn text-dark"
+                        type="button"
+                        data-bs-toggle="dropdown"
+                        aria-expanded="false">
+                    </button>
+                    <ul class="dropdown-menu">
+                        <li>
+                            <button
+                                onclick="changeLanguage('vi')"
+                                type="button"
+                                class="dropdown-item">
+                                Tiếng Việt
+                            </button>
+                        </li>
+                        <li>
+                            <button
+                                onclick="changeLanguage('en')"
+                                type="button"
+                                class="dropdown-item">
+                                Tiếng Anh
+                            </button>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    <script src="/common/header/index.js"></script>
+</nav>

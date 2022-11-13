@@ -1,0 +1,84 @@
+<div class="modal fade" id="c-modal" tabindex="-1">
+    <div class="modal-dialog modal-dialog-scrollable">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Thêm phòng ban</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <form id="c-form">
+                    <div class="mb-3">
+                        <label for="c-name" class="form-label fw-bold">Tên phòng ban</label>
+                        <input
+                            type="text"
+                            class="form-control form-control-sm"
+                            name="c-name"
+                            id="c-name"
+                            placeholder="VD: Giám đốc" />
+                        <small id="c-name-help" class="form-text text-muted">
+                            Tên phòng ban có tối đa 50 ký tự.
+                        </small>
+                    </div>
+                    <div class="mb-3">
+                        <label for="c-total-members" class="form-label fw-bold">
+                            Số lượng nhân viên
+                        </label>
+                        <input
+                            type="number"
+                            class="form-control form-control-sm"
+                            min="0"
+                            step="5"
+                            name="c-total-members"
+                            id="c-total-members"
+                            placeholder="VD: 10" />
+                        <small id="c-total-members-help" class="form-text text-muted">
+                            Số lượng nhân viên phải lớn hơn hoặc bằng 0.
+                        </small>
+                    </div>
+                    <div class="mb-3">
+                        <label for="c-type" class="form-label fw-bold">Loại phòng ban</label>
+                        <select class="form-select form-select-sm" name="c-type" id="c-type">
+                            <option value="DEVELOPER" selected>DEVELOPER</option>
+                            <option value="TESTER">TESTER</option>
+                            <option value="SCRUM_MASTER">SCRUM MASTER</option>
+                            <option value="PROJECT_MANAGER">PROJECT MANAGER</option>
+                        </select>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                    Đóng
+                </button>
+                <button type="button" class="btn btn-success" onclick="createDepartment();">
+                    Tạo mới
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    function createDepartment() {
+        $.ajax({
+            method: 'POST',
+            url: 'http://localhost:8080/api/v1/departments',
+            contentType: 'application/json; charset=utf-8',
+            data: JSON.stringify({
+                name: $('#c-name').val(),
+                totalMembers: $('#c-total-members').val(),
+                type: $('#c-type').val()
+            }),
+            beforeSend: () => $('#loading').show(),
+            success: data => loadDepartments(),
+            complete: () => $('#loading').hide(),
+        });
+
+        bootstrap.Modal.getOrCreateInstance($('#c-modal')).hide();
+    }
+
+    $(function () {
+        const cForm = $('#c-form');
+        $('#c-modal').on('hidden.bs.modal', () => cForm.trigger('reset'));
+    });
+</script>

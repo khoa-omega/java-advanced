@@ -1,0 +1,12 @@
+#table tr {
+    transition: 0.25s;
+}
+
+#table-wrapper {
+    height: 250px;
+}
+
+.selected {
+    color: #fafafa;
+    background-color: #bbbbbb;
+}

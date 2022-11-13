@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="vi">
+    <head>
+        <link rel="stylesheet" href="/page/main/department/index.css" />
+        <script src="/page/main/department/index.js"></script>
+    </head>
+    <body>
+        <div class="container">
+            <div class="row mb-2">
+                <div class="col-6 ps-0">
+                    <label for="type" class="form-label fw-bold">Loại phòng ban</label>
+                    <select class="form-select form-select-sm" name="type" id="type">
+                        <option value="">Tất cả</option>
+                        <option value="DEVELOPER">DEVELOPER</option>
+                        <option value="TESTER">TESTER</option>
+                        <option value="SCRUM_MASTER">SCRUM MASTER</option>
+                        <option value="PROJECT_MANAGER">PROJECT MANAGER</option>
+                    </select>
+                </div>
+                <div class="col-6 pe-0">
+                    <label for="min-created-year" class="form-label fw-bold">
+                        Năm tạo nhỏ nhất
+                    </label>
+                    <input
+                        type="number"
+                        class="form-control form-control-sm"
+                        name="min-created-year"
+                        id="min-created-year"
+                        placeholder="VD: 2021" />
+                </div>
+            </div>
+            <div class="row mb-3">
+                <div class="col-6 ps-0">
+                    <div class="row fw-bold">
+                        <div class="col">Số lượng nhân viên</div>
+                    </div>
+                    <div class="row mt-2">
+                        <div class="col-6">
+                            <input
+                                type="number"
+                                class="form-control form-control-sm"
+                                name="min-total-accounts"
+                                id="min-total-accounts"
+                                placeholder="VD: 3"
+                                min="0"
+                                step="5" />
+                        </div>
+                        <div class="col-6">
+                            <input
+                                type="number"
+                                class="form-control form-control-sm"
+                                name="max-total-accounts"
+                                id="max-total-accounts"
+                                placeholder="VD: 5"
+                                min="0"
+                                step="5" />
+                        </div>
+                    </div>
+                </div>
+                <div class="col-6 pe-0">
+                    <div class="row fw-bold">
+                        <div class="col">Thời gian tạo</div>
+                    </div>
+                    <div class="row mt-2">
+                        <div class="col-6">
+                            <input
+                                type="datetime-local"
+                                class="form-control form-control-sm"
+                                name="min-created-at"
+                                id="min-created-at"
+                                step="1" />
+                        </div>
+                        <div class="col-6">
+                            <input
+                                type="datetime-local"
+                                class="form-control form-control-sm"
+                                name="max-created-at"
+                                id="max-created-at"
+                                step="1" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row mb-3">
+                <div class="col-6 ps-0 d-flex">
+                    <input
+                        id="search"
+                        class="form-control form-control-sm me-2"
+                        type="search"
+                        placeholder="Tìm kiếm phòng ban" />
+                    <button
+                        onclick="loadDepartments();"
+                        class="col-auto btn btn-sm btn-outline-success">
+                        <i class="fa-solid fa-magnifying-glass"></i>
+                        Tìm kiếm
+                    </button>
+                </div>
+                <div class="col-6 pe-0 d-flex justify-content-end">
+                    <button
+                        onclick="loadDepartments();"
+                        type="button"
+                        class="btn btn-sm btn-primary">
+                        <i class="fa-solid fa-arrows-rotate"></i>
+                        Refresh
+                    </button>
+                    <button
+                        id="btn-add"
+                        style="display: none"
+                        type="button"
+                        class="btn btn-sm btn-success ms-2"
+                        data-bs-toggle="modal"
+                        data-bs-target="#c-modal">
+                        <i class="fa-solid fa-plus"></i>
+                        Thêm
+                    </button>
+                    <button
+                        id="btn-edit"
+                        style="display: none"
+                        type="button"
+                        class="btn btn-sm btn-warning ms-2"
+                        data-bs-toggle="modal"
+                        data-bs-target="#u-modal"
+                        disabled>
+                        <i class="fa-solid fa-pen-to-square"></i>
+                        Sửa
+                    </button>
+                    <button
+                        id="btn-delete"
+                        style="display: none"
+                        type="button"
+                        class="btn btn-sm btn-danger ms-2"
+                        data-bs-toggle="modal"
+                        data-bs-target="#d-modal"
+                        disabled>
+                        <i class="fa-solid fa-trash"></i>
+                        Xóa
+                    </button>
+                </div>
+            </div>
+            <div class="row position-relative mb-3">
+                <div id="table-wrapper" class="overflow-auto px-0">
+                    <table
+                        id="table"
+                        class="table table-responsive table-bordered text-center"
+                        role="button">
+                        <thead id="thead">
+                            <tr class="text-primary sticky-top bg-light align-middle text-nowrap">
+                                <th scope="col" class="px-3" sort="id">
+                                    Mã phòng ban
+                                    <i class="fa-solid fa-sort fa-xs ms-2"></i>
+                                </th>
+                                <th scope="col" class="px-4" sort="name">
+                                    Tên phòng ban
+                                    <i class="fa-solid fa-sort fa-xs ms-2"></i>
+                                </th>
+                                <th scope="col" class="px-3" sort="totalMembers">
+                                    Số lượng nhân viên
+                                    <i class="fa-solid fa-sort fa-xs ms-2"></i>
+                                </th>
+                                <th scope="col" class="px-3" sort="type">
+                                    Loại phòng ban
+                                    <i class="fa-solid fa-sort fa-xs ms-2"></i>
+                                </th>
+                                <th scope="col" class="px-4" sort="createdAt">
+                                    Thời gian tạo
+                                    <i class="fa-solid fa-sort fa-xs ms-2"></i>
+                                </th>
+                                <th scope="col" class="px-4" sort="createdAt">
+                                    Cập nhật lúc
+                                    <i class="fa-solid fa-sort fa-xs ms-2"></i>
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody id="tbody"></tbody>
+                    </table>
+                </div>
+                <div id="loading" class="position-absolute bg-light h-100">
+                    <div class="d-flex justify-content-center align-items-center h-100">
+                        <div class="spinner-border text-primary"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-auto px-0">
+                    <select
+                        id="page-size"
+                        onchange="loadDepartments();"
+                        class="form-select form-select-sm">
+                        <option value="10" selected>10</option>
+                        <option value="25">25</option>
+                        <option value="50">50</option>
+                    </select>
+                </div>
+                <div class="col-auto">bản ghi mỗi trang.</div>
+                <nav class="col-auto ms-auto px-0">
+                    <ul class="pagination pagination-sm">
+                        <li class="page-item">
+                            <button
+                                onclick="addPage(-1);"
+                                id="previous"
+                                class="page-link disabled"
+                                type="button">
+                                Trang trước
+                            </button>
+                        </li>
+                        <li class="page-item">
+                            <input
+                                id="page-number"
+                                class="form-control form-control-sm"
+                                type="number"
+                                value="1"
+                                min="1" />
+                        </li>
+                        <li class="page-item">
+                            <button
+                                onclick="addPage(1);"
+                                id="next"
+                                class="page-link disabled"
+                                type="button">
+                                Trang sau
+                            </button>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+
+        <div id="c-modal-wrapper"></div>
+        <div id="u-modal-wrapper"></div>
+        <div id="d-modal-wrapper"></div>
+    </body>
+</html>

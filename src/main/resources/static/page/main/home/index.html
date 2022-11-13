@@ -1,0 +1,21 @@
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="text-center fs-1">
+            <p class="text-bg-warning"><b>HOME PAGE</b></p>
+            <b id="hi" class="text-danger">
+                <big class="text-primary full-name"></big>
+            </b>
+        </div>
+    </div>
+
+    <script>
+        if ('username' in sessionStorage) {
+            $('.full-name').text(sessionStorage.fullName);
+        } else {
+            location.replace('/common/error/404-not-found.html');
+        }
+
+        // Load text by language
+        $('#hi').prepend(_.home_hi);
+    </script>
+</div>

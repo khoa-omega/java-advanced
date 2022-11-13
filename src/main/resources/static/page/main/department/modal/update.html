@@ -1,0 +1,104 @@
+<div class="modal fade" id="u-modal" tabindex="-1">
+    <div class="modal-dialog modal-dialog-scrollable">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Cập nhật phòng ban</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <form id="u-form">
+                    <div class="mb-3">
+                        <label for="u-id" class="form-label fw-bold">Mã phòng ban</label>
+                        <input
+                            type="number"
+                            class="form-control form-control-sm"
+                            name="u-id"
+                            id="u-id"
+                            disabled />
+                    </div>
+                    <div class="mb-3">
+                        <label for="u-name" class="form-label fw-bold">Tên phòng ban</label>
+                        <input
+                            type="text"
+                            class="form-control form-control-sm"
+                            name="u-name"
+                            id="u-name"
+                            placeholder="VD: Giám đốc" />
+                        <small id="form-name-help" class="form-text text-muted">
+                            Tên phòng ban có tối đa 50 ký tự.
+                        </small>
+                    </div>
+                    <div class="mb-3">
+                        <label for="u-total-members" class="form-label fw-bold">
+                            Số lượng nhân viên
+                        </label>
+                        <input
+                            type="number"
+                            class="form-control form-control-sm"
+                            min="0"
+                            step="5"
+                            name="u-total-members"
+                            id="u-total-members"
+                            placeholder="VD: 10" />
+                        <small id="u-total-members-help" class="form-text text-muted">
+                            Số lượng nhân viên phải lớn hơn hoặc bằng 0.
+                        </small>
+                    </div>
+                    <div class="mb-3">
+                        <label for="u-type" class="form-label fw-bold">Loại phòng ban</label>
+                        <select class="form-select form-select-sm" name="u-type" id="u-type">
+                            <option value="DEVELOPER" selected>DEVELOPER</option>
+                            <option value="TESTER">TESTER</option>
+                            <option value="SCRUM_MASTER">SCRUM MASTER</option>
+                            <option value="PROJECT_MANAGER">PROJECT MANAGER</option>
+                        </select>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                    Đóng
+                </button>
+                <button type="button" class="btn btn-warning" onclick="updateDepartment();">
+                    Cập nhật
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    function updateDepartment() {
+        const id = $('#u-id').val();
+
+        $.ajax({
+            method: 'PUT',
+            url: 'http://localhost:8080/api/v1/departments/' + id,
+            contentType: 'application/json; charset=utf-8',
+            data: JSON.stringify({
+                id: id,
+                name: $('#u-name').val(),
+                totalMembers: $('#u-total-members').val(),
+                type: $('#u-type').val()
+            }),
+            beforeSend: () => $('#loading').show(),
+            success: data => loadDepartments(),
+            complete: () => $('#loading').hide()
+        });
+
+        bootstrap.Modal.getOrCreateInstance($('#u-modal')).hide();
+    }
+
+    $(function () {
+        const uForm = $('#u-form');
+        $('#u-modal').on('hidden.bs.modal', () => uForm.trigger('reset'));
+
+        $('#u-modal').on('shown.bs.modal', () => {
+            const row = $('.selected');
+            $('#u-id').val(row.find('.id').text());
+            $('#u-name').val(row.find('.name').text());
+            $('#u-total-members').val(row.find('.total-members').text());
+            $('#u-type').val(row.find('.type').text());
+        });
+    });
+</script>

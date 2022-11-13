@@ -1,0 +1,50 @@
+<div class="d-flex align-items-start">
+    <div class="nav flex-column nav-pills me-3">
+        <button
+            id="home-tab"
+            class="nav-link active"
+            type="button"
+            data-bs-toggle="pill"
+            onclick="loadHomeTab();">
+        </button>
+        <button
+            id="department-tab"
+            class="nav-link"
+            type="button"
+            data-bs-toggle="pill"
+            onclick="loadDepartmentTab();">
+        </button>
+        <button
+            id="account-tab"
+            class="nav-link"
+            type="button"
+            data-bs-toggle="pill"
+            onclick="loadAccountTab();">
+        </button>
+    </div>
+    <div class="tab-content ms-5" style="width: 85%">
+        <div class="tab-pane fade show active" id="v-pills-content"></div>
+    </div>
+</div>
+
+<script>
+    const main = $('#v-pills-content');
+    $(() => loadHomeTab());
+
+    // Load text by language
+    $('#home-tab').append(_.main_home_tab);
+    $('#department-tab').append(_.main_department_tab);
+    $('#account-tab').append(_.main_account_tab);
+
+    function loadHomeTab() {
+        main.load('/page/main/home/index.html');
+    }
+
+    function loadDepartmentTab() {
+        main.load('/page/main/department/index.html');
+    }
+
+    function loadAccountTab() {
+        main.load('/page/main/account/index.html');
+    }
+</script>
