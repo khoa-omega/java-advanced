@@ -1,6 +1,13 @@
 package com.vti.entity;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
 
 @Entity
 @Table(name = "student")
@@ -13,17 +20,9 @@ public class Student {
     @Column(name = "name", length = 50, unique = true, nullable = false)
     private String name;
 
-    @Column(name = "gender", length = 50, nullable = false)
+    @Column(name = "gender", length = 6, nullable = false)
     @Enumerated(value = EnumType.STRING)
     private Gender gender;
-
-    public Student() {
-    }
-
-    public Student(String name, Gender gender) {
-        this.name = name;
-        this.gender = gender;
-    }
 
     public int getId() {
         return id;
@@ -56,5 +55,9 @@ public class Student {
                 ", name='" + name + '\'' +
                 ", gender=" + gender +
                 '}';
+    }
+
+    public enum Gender {
+        MALE, FEMALE
     }
 }
