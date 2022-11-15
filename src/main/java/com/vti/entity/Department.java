@@ -1,6 +1,11 @@
 package com.vti.entity;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
 
 @Entity
 @Table(name = "department")
@@ -12,18 +17,6 @@ public class Department {
 
     @Column(name = "name", length = 50, unique = true, nullable = false)
     private String name;
-
-    public Department() {
-    }
-
-    public Department(String name) {
-        this.name = name;
-    }
-
-    public Department(int id, String name) {
-        this.id = id;
-        this.name = name;
-    }
 
     public int getId() {
         return id;

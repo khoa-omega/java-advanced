@@ -1,2 +1,2 @@
-DROP DATABASE IF EXISTS department_manager;
-CREATE DATABASE department_manager;
+DROP DATABASE IF EXISTS department_management;
+CREATE DATABASE department_management;
