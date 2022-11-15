@@ -1,2 +1,2 @@
-DROP DATABASE IF EXISTS group_manager;
-CREATE DATABASE group_manager;
+DROP DATABASE IF EXISTS group_management;
+CREATE DATABASE group_management;

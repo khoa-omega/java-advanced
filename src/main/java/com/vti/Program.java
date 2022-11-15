@@ -7,10 +7,13 @@ import com.vti.utils.HibernateUtils;
 public class Program {
     public static void main(String[] args) {
         GroupRepository repository = new GroupRepository();
-        repository.create(new Group("SQL"));
-        repository.create(new Group("Java Basic"));
-        repository.create(new Group("Frontend Basic"));
-        repository.create(new Group("Java Advanced"));
+
+        System.out.println("-------------------- CREATE --------------------");
+        Group group = new Group();
+        group.setName("Java Advanced");
+        repository.create(group);
+
+        System.out.println("Please check database to see new group.");
         HibernateUtils.closeFactory();
     }
 }
