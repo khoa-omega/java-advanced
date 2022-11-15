@@ -3,31 +3,30 @@ package com.vti.repository;
 import com.vti.entity.Department;
 import com.vti.utils.HibernateUtils;
 import org.hibernate.Session;
-import org.hibernate.query.Query;
 
 import java.util.List;
 
 public class DepartmentRepository {
-    public List<Department> getAll() {
+    public List<Department> findAll() {
         try (Session session = HibernateUtils.openSession()) {
-            String hql = "FROM Department";
-            Query<Department> query = session.createQuery(hql, Department.class);
-            return query.getResultList();
+            return session
+                    .createQuery("FROM Department", Department.class)
+                    .getResultList();
         }
     }
 
-    public Department getById(int id) {
+    public Department findById(int id) {
         try (Session session = HibernateUtils.openSession()) {
             return session.get(Department.class, id);
         }
     }
 
-    public Department getByName(String name) {
+    public Department findByName(String name) {
         try (Session session = HibernateUtils.openSession()) {
-            String hql = "FROM Department WHERE name = :name";
-            Query<Department> query = session.createQuery(hql, Department.class);
-            query.setParameter("name", name);
-            return query.uniqueResult();
+            return session
+                    .createQuery("FROM Department WHERE name = :name", Department.class)
+                    .setParameter("name", name)
+                    .uniqueResult();
         }
     }
 
@@ -57,10 +56,10 @@ public class DepartmentRepository {
     }
 
     public boolean existsById(int id) {
-        return getById(id) != null;
+        return findById(id) != null;
     }
 
     public boolean existsByName(String name) {
-        return getByName(name) != null;
+        return findByName(name) != null;
     }
 }

@@ -10,35 +10,33 @@ public class Program {
     public static void main(String[] args) {
         DepartmentRepository repository = new DepartmentRepository();
 
-        // Create departments
-        System.out.println("------------ Create departments ------------");
-        repository.create(new Department("SQL"));
-        repository.create(new Department("Java Basic"));
-        repository.create(new Department("Frontend Basic"));
-        repository.create(new Department("Java Advanced"));
+        System.out.println("-------------------- CREATE --------------------");
+        Department departmentA = new Department();
+        departmentA.setName("Giám đốc");
+        repository.create(departmentA);
 
-        // Get all departments
-        System.out.println("------------ Get all departments ------------");
-        List<Department> departments = repository.getAll();
-        for (Department department : departments) {
-            System.out.println("department = " + department);
-        }
+        Department departmentB = new Department();
+        departmentB.setName("Kinh doanh");
+        repository.create(departmentB);
 
-        // Get department by id
-        System.out.println("------------ Get department by id ------------");
-        System.out.println("repository.getById(2) = " + repository.getById(2));
+        System.out.println("-------------------- FIND BY ID --------------------");
+        Department departmentById = repository.findById(2);
+        System.out.println("departmentById = " + departmentById);
 
-        // Update department
-        System.out.println("------------ Update department ------------");
-        repository.update(new Department(2, "New Java Basic"));
+        System.out.println("-------------------- UPDATE --------------------");
+        departmentA.setName("Bảo vệ");
+        repository.update(departmentA);
 
-        // Delete department
-        System.out.println("------------ Delete department ------------");
+        System.out.println("-------------------- FIND BY NAME --------------------");
+        Department departmentByName = repository.findByName("Bảo vệ");
+        System.out.println("departmentByName = " + departmentByName);
+
+        System.out.println("-------------------- DELETE BY ID --------------------");
         repository.deleteById(1);
 
-        // Get all departments
-        System.out.println("------------ Get all departments ------------");
-        for (Department department : repository.getAll()) {
+        System.out.println("-------------------- FIND ALL --------------------");
+        List<Department> departments = repository.findAll();
+        for (Department department : departments) {
             System.out.println("department = " + department);
         }
 
