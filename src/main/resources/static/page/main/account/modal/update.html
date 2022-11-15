@@ -73,6 +73,10 @@
                             <option value="EMPLOYEE">EMPLOYEE</option>
                         </select>
                     </div>
+                    <div class="mb-3">
+                        <label for="u-departments" class="form-label fw-bold">Phòng ban</label>
+                        <select class="form-select form-select-sm" name="u-departments" id="u-departments"></select>
+                    </div>
                 </form>
             </div>
             <div class="modal-footer">
@@ -102,6 +106,7 @@
                 username: $('#u-username').val(),
                 password: $('#u-password').val(),
                 role: $('#u-role').val(),
+                departmentId: $('#u-departments').val()
             }),
             beforeSend: () => $('#loading').show(),
             success: data => loadAccounts(),
@@ -111,11 +116,27 @@
         bootstrap.Modal.getOrCreateInstance($('#u-modal')).hide();
     }
 
+    function uLoadDepartments() {
+        $.ajax({
+            method: 'GET',
+            url: 'http://localhost:8080/api/v1/departments',
+            success: page => {
+                let options = '<option value="">Chưa có</option>';
+                for (const department of page.content) {
+                    options += `<option value="${department.id}">${department.name}</option>`;
+                }
+                $('#u-departments').empty().append(options);
+            },
+            error: () => location.replace('/common/error/404-not-found.html')
+        });
+    }
+
     $(function () {
         const uForm = $('#u-form');
         $('#u-modal').on('hidden.bs.modal', () => uForm.trigger('reset'));
 
         $('#u-modal').on('shown.bs.modal', () => {
+            uLoadDepartments();
             const row = $('.selected');
             const fullName = row.find('.full-name').text();
             const index = fullName.indexOf(' ');

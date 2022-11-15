@@ -75,7 +75,6 @@ function loadAccounts() {
         minId: $('#min-id').val(),
         maxId: $('#max-id').val()
     };
-    debugger
     $.ajax({
         method: 'GET',
         url: 'http://localhost:8080/api/v1/accounts?' + new URLSearchParams(params),
@@ -100,6 +99,7 @@ function showAccounts(accounts) {
                 <td class='full-name'>${account.fullName}</td>
                 <td class='username'>${account.username}</td>
                 <td class='role'>${account.role}</td>
+                <td class='department-name'>${account.departmentName}</td>
             </tr>
         `);
     }

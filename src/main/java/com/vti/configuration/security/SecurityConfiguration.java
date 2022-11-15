@@ -38,7 +38,7 @@ public class SecurityConfiguration {
     }
 
     @Bean
-    public SecurityFilterChain filterChain(HttpSecurity http, ErrorHandler handler) throws Exception {
+    public SecurityFilterChain securityFilterChain(HttpSecurity http, ErrorHandler handler) throws Exception {
         http
                 .csrf().disable()
                 .cors(withDefaults())
@@ -66,11 +66,11 @@ public class SecurityConfiguration {
                                 .loginProcessingUrl("/api/v1/auth/login")
                                 .defaultSuccessUrl("/index.html")
                 )
-                .logout(logout -> {
-                    logout
-                            .logoutUrl("/api/v1/auth/logout")
-                            .deleteCookies("JSESSIONID");
-                })
+                .logout(logout ->
+                        logout
+                                .logoutUrl("/api/v1/auth/logout")
+                                .deleteCookies("JSESSIONID")
+                )
                 .rememberMe(rememberMe -> rememberMe.key("uniqueAndSecret"))
                 .httpBasic();
         return http.build();
