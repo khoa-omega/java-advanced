@@ -2,8 +2,12 @@ package com.vti.entity;
 
 import org.hibernate.annotations.CreationTimestamp;
 
-import javax.persistence.*;
-import java.time.LocalDate;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.IdClass;
+import javax.persistence.Table;
+import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "group_student")
@@ -11,46 +15,38 @@ import java.time.LocalDate;
 public class GroupStudent {
     @Id
     @Column(name = "group_id")
-    private int groupId;
+    private Integer groupId;
 
     @Id
     @Column(name = "student_id")
-    private int studentId;
+    private Integer studentId;
 
-    @Column(name = "joined_date", nullable = false)
+    @Column(name = "joined_at", nullable = false)
     @CreationTimestamp
-    private LocalDate joinedDate;
+    private LocalDateTime joinedAt;
 
-    public GroupStudent() {
-    }
-
-    public GroupStudent(int groupId, int studentId) {
-        this.groupId = groupId;
-        this.studentId = studentId;
-    }
-
-    public int getGroupId() {
+    public Integer getGroupId() {
         return groupId;
     }
 
-    public void setGroupId(int groupId) {
+    public void setGroupId(Integer groupId) {
         this.groupId = groupId;
     }
 
-    public int getStudentId() {
+    public Integer getStudentId() {
         return studentId;
     }
 
-    public void setStudentId(int studentId) {
+    public void setStudentId(Integer studentId) {
         this.studentId = studentId;
     }
 
-    public LocalDate getJoinedDate() {
-        return joinedDate;
+    public LocalDateTime getJoinedAt() {
+        return joinedAt;
     }
 
-    public void setJoinedDate(LocalDate joinedDate) {
-        this.joinedDate = joinedDate;
+    public void setJoinedAt(LocalDateTime joinedAt) {
+        this.joinedAt = joinedAt;
     }
 
     @Override
@@ -58,7 +54,7 @@ public class GroupStudent {
         return "GroupStudent{" +
                 "groupId=" + groupId +
                 ", studentId=" + studentId +
-                ", joinedDate=" + joinedDate +
+                ", joinedAt=" + joinedAt +
                 '}';
     }
 }

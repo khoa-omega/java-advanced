@@ -3,16 +3,15 @@ package com.vti.repository;
 import com.vti.entity.GroupStudent;
 import com.vti.utils.HibernateUtils;
 import org.hibernate.Session;
-import org.hibernate.query.Query;
 
 import java.util.List;
 
 public class GroupStudentRepository {
-    public List<GroupStudent> getAll() {
+    public List<GroupStudent> findAll() {
         try (Session session = HibernateUtils.openSession()) {
-            String hql = "FROM GroupStudent";
-            Query<GroupStudent> query = session.createQuery(hql, GroupStudent.class);
-            return query.getResultList();
+            return session
+                    .createQuery("FROM GroupStudent", GroupStudent.class)
+                    .getResultList();
         }
     }
 

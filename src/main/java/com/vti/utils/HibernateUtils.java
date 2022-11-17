@@ -2,6 +2,7 @@ package com.vti.utils;
 
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.boot.model.naming.CamelCaseToUnderscoresNamingStrategy;
 import org.hibernate.cfg.Configuration;
 
 public class HibernateUtils {
@@ -9,7 +10,9 @@ public class HibernateUtils {
 
     public static Session openSession() {
         if (factory == null || factory.isClosed()) {
-            factory = new Configuration().configure().buildSessionFactory();
+            Configuration configuration = new Configuration().configure();
+            configuration.setPhysicalNamingStrategy(new CamelCaseToUnderscoresNamingStrategy());
+            factory = configuration.buildSessionFactory();
         }
         return factory.openSession();
     }
