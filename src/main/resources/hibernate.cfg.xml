@@ -3,13 +3,13 @@
     <session-factory>
         <!--    Database connection    -->
         <property name="connection.driver_class">com.mysql.cj.jdbc.Driver</property>
-        <property name="connection.url">jdbc:mysql://localhost:3306/student_manager</property>
+        <property name="connection.url">jdbc:mysql://localhost:3306/student_management</property>
         <property name="connection.username">root</property>
         <property name="connection.password">root</property>
         <property name="connection.pool_size">3</property>
 
         <!--    Show SQL    -->
-        <property name="hibernate.show_sql">false</property>
+        <property name="hibernate.show_sql">true</property>
         <property name="hibernate.highlight_sql">true</property>
         <property name="hibernate.format_sql">false</property>
         <property name="hibernate.use_sql_comments">false</property>
@@ -20,7 +20,7 @@
         <property name="hibernate.enable_lazy_load_no_trans">true</property>
 
         <!--    Entity mapping    -->
-        <mapping class="com.vti.entity.Student" />
-        <mapping class="com.vti.entity.Group" />
+        <mapping class="com.vti.entity.Student"/>
+        <mapping class="com.vti.entity.Group"/>
     </session-factory>
 </hibernate-configuration>
