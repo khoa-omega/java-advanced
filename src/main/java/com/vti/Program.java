@@ -11,16 +11,16 @@ public class Program {
     public static void main(String[] args) {
         GroupStudentRepository repository = new GroupStudentRepository();
 
-        // Create group student
-        repository.create(new GroupStudent(new GroupStudentPK(1, 1)));
-        repository.create(new GroupStudent(new GroupStudentPK(1, 2)));
-        repository.create(new GroupStudent(new GroupStudentPK(2, 1)));
-        repository.create(new GroupStudent(new GroupStudentPK(2, 2)));
-        // repository.create(new GroupStudent(new GroupStudentPK(2, 2)));
+        System.out.println("-------------------- CREATE --------------------");
+        GroupStudentPK groupStudentId = new GroupStudentPK();
+        groupStudentId.setStudentId(1);
+        groupStudentId.setGroupId(1);
+        GroupStudent groupStudentA = new GroupStudent();
+        groupStudentA.setId(groupStudentId);
+        repository.create(groupStudentA);
 
-        // Get all group student
-        System.out.println("------------ Get all students ------------");
-        List<GroupStudent> groupStudents = repository.getAll();
+        System.out.println("-------------------- FIND ALL --------------------");
+        List<GroupStudent> groupStudents = repository.findAll();
         for (GroupStudent groupStudent : groupStudents) {
             System.out.println("groupStudent = " + groupStudent);
         }

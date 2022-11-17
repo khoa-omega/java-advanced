@@ -3,7 +3,7 @@
     <session-factory>
         <!--    Database connection    -->
         <property name="connection.driver_class">com.mysql.cj.jdbc.Driver</property>
-        <property name="connection.url">jdbc:mysql://localhost:3306/student_manager</property>
+        <property name="connection.url">jdbc:mysql://localhost:3306/student_management</property>
         <property name="connection.username">root</property>
         <property name="connection.password">root</property>
         <property name="connection.pool_size">3</property>
@@ -19,6 +19,6 @@
         <property name="hibernate.globally_quoted_identifiers">true</property>
 
         <!--    Entity mapping    -->
-        <mapping class="com.vti.entity.GroupStudent" />
+        <mapping class="com.vti.entity.GroupStudent"/>
     </session-factory>
 </hibernate-configuration>

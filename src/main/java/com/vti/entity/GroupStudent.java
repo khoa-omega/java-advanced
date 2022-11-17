@@ -6,7 +6,7 @@ import javax.persistence.Column;
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
 import javax.persistence.Table;
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "group_student")
@@ -14,16 +14,9 @@ public class GroupStudent {
     @EmbeddedId
     private GroupStudentPK id;
 
-    @Column(name = "joined_date", nullable = false)
+    @Column(name = "joined_at", nullable = false)
     @CreationTimestamp
-    private LocalDate joinedDate;
-
-    public GroupStudent() {
-    }
-
-    public GroupStudent(GroupStudentPK id) {
-        this.id = id;
-    }
+    private LocalDateTime joinedAt;
 
     public GroupStudentPK getId() {
         return id;
@@ -33,19 +26,19 @@ public class GroupStudent {
         this.id = id;
     }
 
-    public LocalDate getJoinedDate() {
-        return joinedDate;
+    public LocalDateTime getJoinedAt() {
+        return joinedAt;
     }
 
-    public void setJoinedDate(LocalDate joinedDate) {
-        this.joinedDate = joinedDate;
+    public void setJoinedAt(LocalDateTime joinedAt) {
+        this.joinedAt = joinedAt;
     }
 
     @Override
     public String toString() {
         return "GroupStudent{" +
                 "id=" + id +
-                ", joinedDate=" + joinedDate +
+                ", joinedAt=" + joinedAt +
                 '}';
     }
 }
