@@ -1,6 +1,12 @@
 package com.vti.entity;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Convert;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
 
 @Entity
 @Table(name = "student")
@@ -14,16 +20,8 @@ public class Student {
     private String name;
 
     @Column(name = "gender", nullable = false)
-    @Convert(converter = GenderConverter.class)
+    @Convert(converter = StudentGenderConverter.class)
     private Gender gender;
-
-    public Student() {
-    }
-
-    public Student(String name, Gender gender) {
-        this.name = name;
-        this.gender = gender;
-    }
 
     public int getId() {
         return id;
@@ -56,5 +54,29 @@ public class Student {
                 ", name='" + name + '\'' +
                 ", gender=" + gender +
                 '}';
+    }
+
+    public enum Gender {
+        MALE('M'), FEMALE('F');
+
+        private final char code;
+
+        Gender(char code) {
+            this.code = code;
+        }
+
+        public char getCode() {
+            return code;
+        }
+
+        public static Gender fromCode(char code) {
+            if (code == 'M' || code == 'm') {
+                return MALE;
+            }
+            if (code == 'F' || code == 'f') {
+                return FEMALE;
+            }
+            throw new UnsupportedOperationException("The code is unsupported.");
+        }
     }
 }
