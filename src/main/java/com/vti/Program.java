@@ -1,7 +1,7 @@
 package com.vti;
 
-import com.vti.entity.Gender;
 import com.vti.entity.Student;
+import com.vti.entity.Student.Gender;
 import com.vti.repository.StudentRepository;
 import com.vti.utils.HibernateUtils;
 
@@ -11,16 +11,19 @@ public class Program {
     public static void main(String[] args) {
         StudentRepository repository = new StudentRepository();
 
-        // Create students
-        System.out.println("------------ Create students ------------");
-        repository.create(new Student("Nam", Gender.FEMALE));
-        repository.create(new Student("Duyên", Gender.MALE));
-        repository.create(new Student("Trung", Gender.FEMALE));
-        repository.create(new Student("Giang", Gender.MALE));
+        System.out.println("-------------------- CREATE --------------------");
+        Student studentA = new Student();
+        studentA.setName("Khoa");
+        studentA.setGender(Gender.FEMALE);
+        repository.create(studentA);
 
-        // Get all students
-        System.out.println("------------ Get all students ------------");
-        List<Student> students = repository.getAll();
+        Student studentB = new Student();
+        studentB.setName("Minh Trang");
+        studentB.setGender(Gender.MALE);
+        repository.create(studentB);
+
+        System.out.println("-------------------- FIND ALL --------------------");
+        List<Student> students = repository.findAll();
         for (Student student : students) {
             System.out.println("student = " + student);
         }
