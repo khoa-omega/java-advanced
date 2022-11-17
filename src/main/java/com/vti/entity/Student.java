@@ -1,51 +1,24 @@
 package com.vti.entity;
 
-import org.hibernate.annotations.GenericGenerator;
-import org.hibernate.annotations.Parameter;
-
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Convert;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.SequenceGenerator;
+import javax.persistence.Table;
 
 @Entity
 @Table(name = "student")
 public class Student {
     @Id
     @Column(name = "id", nullable = false)
-
-    /* Implicit sequence */
-    /* @GeneratedValue(strategy = GenerationType.SEQUENCE) */
-
-    /* Named sequence */
-    /* @GeneratedValue(
-            strategy = GenerationType.SEQUENCE,
-            generator = "student_sequence"
-    ) */
-
-    /* Simple @SequenceGenerator */
-    /* @GeneratedValue(
-            strategy = GenerationType.SEQUENCE,
-            generator = "sequence-generator"
-    )
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "sequence-generator")
     @SequenceGenerator(
             name = "sequence-generator",
             sequenceName = "student_sequence",
-            initialValue = 2,
-            allocationSize = 10
-    ) */
-
-    /* @GenericGenerator */
-    @GeneratedValue(
-            strategy = GenerationType.SEQUENCE,
-            generator = "student_generator"
-    )
-    @GenericGenerator(
-            name = "student_generator",
-            strategy = "org.hibernate.id.enhanced.SequenceStyleGenerator",
-            parameters = {
-                    @Parameter(name = "sequence_name", value = "student_sequence"),
-                    @Parameter(name = "initial_value", value = "10"),
-                    @Parameter(name = "increment_size", value = "1"),
-                    @Parameter(name = "optimizer", value = "pooled-lo")
-            }
+            initialValue = 2
     )
     private int id;
 
@@ -53,16 +26,8 @@ public class Student {
     private String name;
 
     @Column(name = "gender", nullable = false)
-    @Convert(converter = GenderConverter.class)
+    @Convert(converter = StudentGenderConverter.class)
     private Gender gender;
-
-    public Student() {
-    }
-
-    public Student(String name, Gender gender) {
-        this.name = name;
-        this.gender = gender;
-    }
 
     public int getId() {
         return id;
@@ -95,5 +60,29 @@ public class Student {
                 ", name='" + name + '\'' +
                 ", gender=" + gender +
                 '}';
+    }
+
+    public enum Gender {
+        MALE('M'), FEMALE('F');
+
+        private final char code;
+
+        Gender(char code) {
+            this.code = code;
+        }
+
+        public char getCode() {
+            return code;
+        }
+
+        public static Gender fromCode(char code) {
+            if (code == 'M' || code == 'm') {
+                return MALE;
+            }
+            if (code == 'F' || code == 'f') {
+                return FEMALE;
+            }
+            throw new UnsupportedOperationException("The code is unsupported.");
+        }
     }
 }
