@@ -1,8 +1,10 @@
 package com.vti.entity;
 
+import com.vti.entity.Student.Gender;
+
 import javax.persistence.AttributeConverter;
 
-public class GenderConverter implements AttributeConverter<Gender, Character> {
+public class StudentGenderConverter implements AttributeConverter<Gender, Character> {
     @Override
     public Character convertToDatabaseColumn(Gender gender) {
         return gender.getCode();
@@ -10,6 +12,6 @@ public class GenderConverter implements AttributeConverter<Gender, Character> {
 
     @Override
     public Gender convertToEntityAttribute(Character code) {
-        return Gender.toGender(code);
+        return Gender.fromCode(code);
     }
 }

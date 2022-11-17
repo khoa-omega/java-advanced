@@ -1,37 +1,38 @@
 package com.vti.entity;
 
-import javax.persistence.*;
+import org.hibernate.annotations.Type;
+
+import javax.persistence.Column;
+import javax.persistence.Convert;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
 import java.util.UUID;
 
 @Entity
 @Table(name = "student")
 public class Student {
     @Id
-    @Column(name = "id")
+    @Column(name = "uuid", length = 36, nullable = false)
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private UUID id;
+    @Type(type = "org.hibernate.type.UUIDCharType")
+    private UUID uuid;
 
     @Column(name = "name", length = 50, unique = true, nullable = false)
     private String name;
 
     @Column(name = "gender", nullable = false)
-    @Convert(converter = GenderConverter.class)
+    @Convert(converter = StudentGenderConverter.class)
     private Gender gender;
 
-    public Student() {
+    public UUID getUuid() {
+        return uuid;
     }
 
-    public Student(String name, Gender gender) {
-        this.name = name;
-        this.gender = gender;
-    }
-
-    public UUID getId() {
-        return id;
-    }
-
-    public void setId(UUID id) {
-        this.id = id;
+    public void setUuid(UUID uuid) {
+        this.uuid = uuid;
     }
 
     public String getName() {
@@ -53,9 +54,33 @@ public class Student {
     @Override
     public String toString() {
         return "Student{" +
-                "id=" + id +
+                "id=" + uuid +
                 ", name='" + name + '\'' +
                 ", gender=" + gender +
                 '}';
+    }
+
+    public enum Gender {
+        MALE('M'), FEMALE('F');
+
+        private final char code;
+
+        Gender(char code) {
+            this.code = code;
+        }
+
+        public char getCode() {
+            return code;
+        }
+
+        public static Gender fromCode(char code) {
+            if (code == 'M' || code == 'm') {
+                return MALE;
+            }
+            if (code == 'F' || code == 'f') {
+                return FEMALE;
+            }
+            throw new UnsupportedOperationException("The code is unsupported.");
+        }
     }
 }
