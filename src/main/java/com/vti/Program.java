@@ -11,12 +11,14 @@ public class Program {
         GroupStudentRepository repository = new GroupStudentRepository();
 
         System.out.println("-------------------- CREATE --------------------");
+
         GroupStudent groupStudentA = new GroupStudent();
         groupStudentA.setStudentId(1);
         groupStudentA.setGroupId(1);
         repository.create(groupStudentA);
 
         System.out.println("-------------------- FIND ALL --------------------");
+
         List<GroupStudent> groupStudents = repository.findAll();
         for (GroupStudent groupStudent : groupStudents) {
             System.out.println("groupStudent = " + groupStudent);

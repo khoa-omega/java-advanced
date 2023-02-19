@@ -14,39 +14,21 @@ import java.time.LocalDateTime;
 @IdClass(value = GroupStudentPK.class)
 public class GroupStudent {
     @Id
-    @Column(name = "group_id")
-    private Integer groupId;
+    private int groupId;
 
     @Id
-    @Column(name = "student_id")
-    private Integer studentId;
+    private int studentId;
 
-    @Column(name = "joined_at", nullable = false)
+    @Column(name = "joined_at", nullable = false, updatable = false)
     @CreationTimestamp
     private LocalDateTime joinedAt;
 
-    public Integer getGroupId() {
-        return groupId;
-    }
-
-    public void setGroupId(Integer groupId) {
+    public void setGroupId(int groupId) {
         this.groupId = groupId;
     }
 
-    public Integer getStudentId() {
-        return studentId;
-    }
-
-    public void setStudentId(Integer studentId) {
+    public void setStudentId(int studentId) {
         this.studentId = studentId;
-    }
-
-    public LocalDateTime getJoinedAt() {
-        return joinedAt;
-    }
-
-    public void setJoinedAt(LocalDateTime joinedAt) {
-        this.joinedAt = joinedAt;
     }
 
     @Override

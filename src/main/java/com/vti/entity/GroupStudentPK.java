@@ -9,26 +9,10 @@ public class GroupStudentPK implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @Column(name = "group_id", nullable = false)
-    private Integer groupId;
+    private int groupId;
 
     @Column(name = "student_id", nullable = false)
-    private Integer studentId;
-
-    public Integer getGroupId() {
-        return groupId;
-    }
-
-    public void setGroupId(Integer groupId) {
-        this.groupId = groupId;
-    }
-
-    public Integer getStudentId() {
-        return studentId;
-    }
-
-    public void setStudentId(Integer studentId) {
-        this.studentId = studentId;
-    }
+    private int studentId;
 
     @Override
     public String toString() {
