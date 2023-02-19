@@ -12,7 +12,7 @@ import javax.persistence.Table;
 @Table(name = "student")
 public class Student {
     @Id
-    @Column(name = "id")
+    @Column(name = "id", nullable = false)
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
@@ -23,24 +23,8 @@ public class Student {
     @Convert(converter = StudentGenderConverter.class)
     private Gender gender;
 
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
     public void setName(String name) {
         this.name = name;
-    }
-
-    public Gender getGender() {
-        return gender;
     }
 
     public void setGender(Gender gender) {
@@ -70,13 +54,7 @@ public class Student {
         }
 
         public static Gender fromCode(char code) {
-            if (code == 'M' || code == 'm') {
-                return MALE;
-            }
-            if (code == 'F' || code == 'f') {
-                return FEMALE;
-            }
-            throw new UnsupportedOperationException("The code is unsupported.");
+            return code == 'M' ? MALE : FEMALE;
         }
     }
 }
