@@ -12,32 +12,20 @@ import java.time.LocalDateTime;
 @Table(name = "group_student")
 public class GroupStudent {
     @EmbeddedId
-    private GroupStudentPK id;
+    private GroupStudentPK pk;
 
-    @Column(name = "joined_at", nullable = false)
+    @Column(name = "joined_at", nullable = false, updatable = false)
     @CreationTimestamp
     private LocalDateTime joinedAt;
 
-    public GroupStudentPK getId() {
-        return id;
-    }
-
-    public void setId(GroupStudentPK id) {
-        this.id = id;
-    }
-
-    public LocalDateTime getJoinedAt() {
-        return joinedAt;
-    }
-
-    public void setJoinedAt(LocalDateTime joinedAt) {
-        this.joinedAt = joinedAt;
+    public void setPk(GroupStudentPK pk) {
+        this.pk = pk;
     }
 
     @Override
     public String toString() {
         return "GroupStudent{" +
-                "id=" + id +
+                "pk=" + pk +
                 ", joinedAt=" + joinedAt +
                 '}';
     }
