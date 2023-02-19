@@ -1,6 +1,9 @@
 package com.vti.entity;
 
+import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.DynamicInsert;
+import org.hibernate.annotations.DynamicUpdate;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.Column;
@@ -15,13 +18,16 @@ import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "department")
+@DynamicInsert
+@DynamicUpdate
 public class Department {
     @Id
-    @Column(name = "id")
+    @Column(name = "id", nullable = false)
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
     @Column(name = "name", length = 50, unique = true, nullable = false)
+    @ColumnDefault(value = "'Phòng chờ'")
     private String name;
 
     @Column(name = "created_at", nullable = false, updatable = false)
@@ -33,49 +39,15 @@ public class Department {
     private LocalDateTime updatedAt;
 
     @PrePersist
-    public void prePersist() {
-        if (createdAt == null) {
-            createdAt = LocalDateTime.now();
-        }
-    }
-
     @PreUpdate
-    public void preUpdate() {
-        if (updatedAt == null) {
-            updatedAt = LocalDateTime.now();
+    public void trim() {
+        if (name != null) {
+            name = name.trim();
         }
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public String getName() {
-        return name;
     }
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    public LocalDateTime getCreatedAt() {
-        return createdAt;
-    }
-
-    public void setCreatedAt(LocalDateTime createdAt) {
-        this.createdAt = createdAt;
-    }
-
-    public LocalDateTime getUpdatedAt() {
-        return updatedAt;
-    }
-
-    public void setUpdatedAt(LocalDateTime updatedAt) {
-        this.updatedAt = updatedAt;
     }
 
     @Override
