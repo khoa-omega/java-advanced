@@ -15,10 +15,10 @@ import java.util.UUID;
 @Table(name = "student")
 public class Student {
     @Id
-    @Column(name = "uuid", length = 36, nullable = false)
+    @Column(name = "id", length = 36, nullable = false)
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Type(type = "org.hibernate.type.UUIDCharType")
-    private UUID uuid;
+    private UUID id;
 
     @Column(name = "name", length = 50, unique = true, nullable = false)
     private String name;
@@ -27,24 +27,8 @@ public class Student {
     @Convert(converter = StudentGenderConverter.class)
     private Gender gender;
 
-    public UUID getUuid() {
-        return uuid;
-    }
-
-    public void setUuid(UUID uuid) {
-        this.uuid = uuid;
-    }
-
-    public String getName() {
-        return name;
-    }
-
     public void setName(String name) {
         this.name = name;
-    }
-
-    public Gender getGender() {
-        return gender;
     }
 
     public void setGender(Gender gender) {
@@ -54,7 +38,7 @@ public class Student {
     @Override
     public String toString() {
         return "Student{" +
-                "id=" + uuid +
+                "id=" + id +
                 ", name='" + name + '\'' +
                 ", gender=" + gender +
                 '}';
@@ -74,13 +58,7 @@ public class Student {
         }
 
         public static Gender fromCode(char code) {
-            if (code == 'M' || code == 'm') {
-                return MALE;
-            }
-            if (code == 'F' || code == 'f') {
-                return FEMALE;
-            }
-            throw new UnsupportedOperationException("The code is unsupported.");
+            return code == 'M' ? MALE : FEMALE;
         }
     }
 }
