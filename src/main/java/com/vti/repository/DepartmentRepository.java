@@ -49,8 +49,8 @@ public class DepartmentRepository {
     public void deleteById(int id) {
         try (Session session = HibernateUtils.openSession()) {
             session.beginTransaction();
-            Department old = session.get(Department.class, id);
-            session.remove(old);
+            Department department = session.get(Department.class, id);
+            session.remove(department);
             session.getTransaction().commit();
         }
     }
