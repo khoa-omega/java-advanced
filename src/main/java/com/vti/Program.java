@@ -12,17 +12,19 @@ public class Program {
         StudentRepository repository = new StudentRepository();
 
         System.out.println("-------------------- CREATE --------------------");
+
         Student studentA = new Student();
-        studentA.setName("Khoa");
-        studentA.setGender(Gender.FEMALE);
+        studentA.setName("Nguyễn Văn Khoa");
+        studentA.setGender(Gender.MALE);
         repository.create(studentA);
 
         Student studentB = new Student();
-        studentB.setName("Minh Trang");
-        studentB.setGender(Gender.MALE);
+        studentB.setName("Nguyễn Ngọc Minh Trang");
+        studentB.setGender(Gender.FEMALE);
         repository.create(studentB);
 
         System.out.println("-------------------- FIND ALL --------------------");
+
         List<Student> students = repository.findAll();
         for (Student student : students) {
             System.out.println("student = " + student);

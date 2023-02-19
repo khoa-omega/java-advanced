@@ -1,6 +1,7 @@
 package com.vti.entity;
 
 import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.annotations.Parameter;
 
 import javax.persistence.Column;
 import javax.persistence.Convert;
@@ -15,10 +16,11 @@ public class Student {
     @Id
     @Column(name = "code", length = 10, unique = true, nullable = false)
     @GenericGenerator(
-            name = "code-generator",
-            strategy = "com.vti.entity.StudentCodeGenerator"
+            name = "student-code-generator",
+            strategy = "com.vti.entity.StudentCodeGenerator",
+            parameters = @Parameter(name = "prefix", value = "VA")
     )
-    @GeneratedValue(generator = "code-generator")
+    @GeneratedValue(generator = "student-code-generator")
     private String code;
 
     @Column(name = "name", length = 50, unique = true, nullable = false)
@@ -28,24 +30,8 @@ public class Student {
     @Convert(converter = StudentGenderConverter.class)
     private Gender gender;
 
-    public String getCode() {
-        return code;
-    }
-
-    public void setCode(String code) {
-        this.code = code;
-    }
-
-    public String getName() {
-        return name;
-    }
-
     public void setName(String name) {
         this.name = name;
-    }
-
-    public Gender getGender() {
-        return gender;
     }
 
     public void setGender(Gender gender) {
@@ -75,13 +61,7 @@ public class Student {
         }
 
         public static Gender fromCode(char code) {
-            if (code == 'M' || code == 'm') {
-                return MALE;
-            }
-            if (code == 'F' || code == 'f') {
-                return FEMALE;
-            }
-            throw new UnsupportedOperationException("The code is unsupported.");
+            return code == 'M' ? MALE : FEMALE;
         }
     }
 }

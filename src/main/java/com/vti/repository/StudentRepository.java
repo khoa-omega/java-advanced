@@ -1,7 +1,6 @@
 package com.vti.repository;
 
 import com.vti.entity.Student;
-import com.vti.entity.Student.Gender;
 import com.vti.utils.HibernateUtils;
 import org.hibernate.Session;
 
@@ -21,15 +20,6 @@ public class StudentRepository {
             session.beginTransaction();
             session.persist(student);
             session.getTransaction().commit();
-        }
-    }
-
-    public long countByGender(Gender gender) {
-        try (Session session = HibernateUtils.openSession()) {
-            String hql = "SELECT COUNT(code) FROM Student WHERE gender = :gender";
-            return session.createQuery(hql, Long.class)
-                    .setParameter("gender", gender)
-                    .uniqueResult();
         }
     }
 }
