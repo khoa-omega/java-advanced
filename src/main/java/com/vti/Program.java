@@ -2,6 +2,7 @@ package com.vti;
 
 import com.vti.entity.Group;
 import com.vti.entity.GroupStudent;
+import com.vti.entity.GroupStudentPK;
 import com.vti.entity.Student;
 import com.vti.repository.GroupRepository;
 import com.vti.repository.GroupStudentRepository;
@@ -33,19 +34,25 @@ public class Program {
         studentRepository.create(studentB);
 
         GroupStudent groupStudentA = new GroupStudent();
-        groupStudentA.setStudent(studentA);
-        groupStudentA.setGroup(groupA);
-        groupStudentRepository.update(groupStudentA);
+        GroupStudentPK pkA = new GroupStudentPK();
+        pkA.setStudentId(1);
+        pkA.setGroupId(1);
+        groupStudentA.setPk(pkA);
+        groupStudentRepository.create(groupStudentA);
 
         GroupStudent groupStudentB = new GroupStudent();
-        groupStudentB.setStudent(studentA);
-        groupStudentB.setGroup(groupB);
-        groupStudentRepository.update(groupStudentB);
+        GroupStudentPK pkB = new GroupStudentPK();
+        pkB.setStudentId(1);
+        pkB.setGroupId(2);
+        groupStudentB.setPk(pkB);
+        groupStudentRepository.create(groupStudentB);
 
         GroupStudent groupStudentC = new GroupStudent();
-        groupStudentC.setStudent(studentB);
-        groupStudentC.setGroup(groupA);
-        groupStudentRepository.update(groupStudentC);
+        GroupStudentPK pkC = new GroupStudentPK();
+        pkC.setStudentId(2);
+        pkC.setGroupId(1);
+        groupStudentC.setPk(pkC);
+        groupStudentRepository.create(groupStudentC);
 
         System.out.println("-------------------- FIND ALL --------------------");
 
@@ -55,7 +62,6 @@ public class Program {
                 System.out.println("+ group = " + groupStudent.getGroup().getName());
             }
         }
-
 
         HibernateUtils.closeFactory();
     }

@@ -9,7 +9,6 @@ import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.MapsId;
-import javax.persistence.PrePersist;
 import javax.persistence.Table;
 import java.time.LocalDateTime;
 
@@ -32,14 +31,6 @@ public class GroupStudent {
     @Column(name = "joined_at", nullable = false, updatable = false)
     @CreationTimestamp
     private LocalDateTime joinedAt;
-
-    @PrePersist
-    public void prePersist() {
-        GroupStudentPK pk = new GroupStudentPK();
-        pk.setStudentId(student.getId());
-        pk.setGroupId(group.getId());
-        this.pk = pk;
-    }
 
     public void setPk(GroupStudentPK pk) {
         this.pk = pk;
