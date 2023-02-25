@@ -2,44 +2,36 @@ package com.vti.entity;
 
 import org.hibernate.annotations.CreationTimestamp;
 
-import javax.persistence.*;
-import java.time.LocalDate;
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
+import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "group_student")
 public class GroupStudent {
     @Id
-    @Column(name = "id")
+    @Column(name = "id", nullable = false)
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    @ManyToOne
-    @JoinColumn(name = "group_id")
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "group_id", referencedColumnName = "id", nullable = false)
     private Group group;
 
-    @ManyToOne
-    @JoinColumn(name = "student_id")
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "student_id", referencedColumnName = "id", nullable = false)
     private Student student;
 
-    @Column(name = "joined_date")
+    @Column(name = "joined_at", nullable = false, updatable = false)
     @CreationTimestamp
-    private LocalDate joinedDate;
-
-    public GroupStudent() {
-    }
-
-    public GroupStudent(Group group, Student student) {
-        this.group = group;
-        this.student = student;
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
+    private LocalDateTime joinedAt;
 
     public Group getGroup() {
         return group;
@@ -55,13 +47,5 @@ public class GroupStudent {
 
     public void setStudent(Student student) {
         this.student = student;
-    }
-
-    public LocalDate getJoinedDate() {
-        return joinedDate;
-    }
-
-    public void setJoinedDate(LocalDate joinedDate) {
-        this.joinedDate = joinedDate;
     }
 }

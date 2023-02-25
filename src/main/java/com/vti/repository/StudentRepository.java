@@ -3,16 +3,15 @@ package com.vti.repository;
 import com.vti.entity.Student;
 import com.vti.utils.HibernateUtils;
 import org.hibernate.Session;
-import org.hibernate.query.Query;
 
 import java.util.List;
 
 public class StudentRepository {
-    public List<Student> getAll() {
+    public List<Student> findAll() {
         try (Session session = HibernateUtils.openSession()) {
-            String hql = "FROM Student";
-            Query<Student> query = session.createQuery(hql, Student.class);
-            return query.getResultList();
+            return session
+                    .createQuery("FROM Student", Student.class)
+                    .getResultList();
         }
     }
 
@@ -20,6 +19,14 @@ public class StudentRepository {
         try (Session session = HibernateUtils.openSession()) {
             session.beginTransaction();
             session.persist(student);
+            session.getTransaction().commit();
+        }
+    }
+
+    public void update(Student student) {
+        try (Session session = HibernateUtils.openSession()) {
+            session.beginTransaction();
+            session.merge(student);
             session.getTransaction().commit();
         }
     }
