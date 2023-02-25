@@ -10,7 +10,7 @@ import javax.persistence.criteria.Root;
 import java.util.List;
 
 public class DepartmentRepository {
-    public List<Department> getAllBySearching(String search) {
+    public List<Department> findByNameLike(String search) {
         try (Session session = HibernateUtils.openSession()) {
             CriteriaBuilder builder = session.getCriteriaBuilder();
             CriteriaQuery<Department> query = builder.createQuery(Department.class);
