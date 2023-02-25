@@ -1,6 +1,13 @@
 package com.vti.entity;
 
-import javax.persistence.*;
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.ManyToMany;
+import javax.persistence.Table;
 import java.util.List;
 
 @Entity
@@ -11,30 +18,11 @@ public class Group {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    @Column(name = "name", nullable = false)
+    @Column(name = "name", length = 50, unique = true, nullable = false)
     private String name;
 
-    @ManyToMany(mappedBy = "groups")
+    @ManyToMany(cascade = CascadeType.ALL, mappedBy = "groups")
     private List<Student> students;
-
-    public Group() {
-    }
-
-    public Group(int id) {
-        this.id = id;
-    }
-
-    public Group(String name) {
-        this.name = name;
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
 
     public String getName() {
         return name;
