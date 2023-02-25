@@ -4,55 +4,57 @@ import com.vti.dto.DepartmentDTO;
 import com.vti.entity.Department;
 import com.vti.utils.HibernateUtils;
 import org.hibernate.Session;
-import org.hibernate.query.Query;
 
 import java.util.List;
 
 public class DepartmentRepository {
-    public List<Department> getAll() {
+    public List<Department> findAll() {
         try (Session session = HibernateUtils.openSession()) {
-            String hql = "FROM Department";
-            Query<Department> query = session.createQuery(hql, Department.class);
-            return query.getResultList();
+            return session
+                    .createQuery("FROM Department", Department.class)
+                    .getResultList();
         }
     }
 
-    public List<Department> getAllUsingSQL() {
+    public List<Department> findAllUsingSQL() {
         try (Session session = HibernateUtils.openSession()) {
-            Query<Department> query = session.createNativeQuery("SELECT * FROM Department", Department.class);
-            return query.getResultList();
+            return session
+                    .createNativeQuery("SELECT * FROM department", Department.class)
+                    .getResultList();
         }
     }
 
-    public List<DepartmentDTO> getAllWithDTOs() {
+    public List<DepartmentDTO> findAllUsingDTO() {
         try (Session session = HibernateUtils.openSession()) {
             String hql = "SELECT new com.vti.dto.DepartmentDTO(name) FROM Department";
-            Query<DepartmentDTO> query = session.createQuery(hql, DepartmentDTO.class);
-            return query.getResultList();
+            return session
+                    .createQuery(hql, DepartmentDTO.class)
+                    .getResultList();
         }
     }
 
-    public List<Department> getAllWithPaging(int page, int size) {
+    public List<Department> findAllWithPaging(int page, int size) {
         try (Session session = HibernateUtils.openSession()) {
-            Query<Department> query = session.createQuery("FROM Department", Department.class);
-            query.setFirstResult((page - 1) * size);
-            query.setMaxResults(size);
-            return query.getResultList();
+            return session
+                    .createQuery("FROM Department", Department.class)
+                    .setFirstResult((page - 1) * size)
+                    .setMaxResults(size)
+                    .getResultList();
         }
     }
 
-    public Department getById(int id) {
+    public Department findById(int id) {
         try (Session session = HibernateUtils.openSession()) {
             return session.get(Department.class, id);
         }
     }
 
-    public Department getByName(String name) {
+    public Department findByName(String name) {
         try (Session session = HibernateUtils.openSession()) {
-            String hql = "FROM Department WHERE name = :name";
-            Query<Department> query = session.createQuery(hql, Department.class);
-            query.setParameter("name", name);
-            return query.uniqueResult();
+            return session
+                    .createQuery("FROM Department WHERE name = :name", Department.class)
+                    .setParameter("name", name)
+                    .uniqueResult();
         }
     }
 
@@ -75,25 +77,25 @@ public class DepartmentRepository {
     public void deleteById(int id) {
         try (Session session = HibernateUtils.openSession()) {
             session.beginTransaction();
-            Department old = session.get(Department.class, id);
-            session.remove(old);
+            Department department = session.get(Department.class, id);
+            session.remove(department);
             session.getTransaction().commit();
         }
     }
 
     public boolean existsById(int id) {
-        return getById(id) != null;
+        return findById(id) != null;
     }
 
     public boolean existsByName(String name) {
-        return getByName(name) != null;
+        return findByName(name) != null;
     }
 
-    public long countAll() {
+    public long countById() {
         try (Session session = HibernateUtils.openSession()) {
-            String hql = "SELECT COUNT(id) FROM Department";
-            Query<Long> query = session.createQuery(hql, Long.class);
-            return query.uniqueResult();
+            return session
+                    .createQuery("SELECT COUNT(id) FROM Department", Long.class)
+                    .uniqueResult();
         }
     }
 }
