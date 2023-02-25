@@ -1,39 +1,27 @@
 package com.vti.entity;
 
-import javax.persistence.*;
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.OneToOne;
+import javax.persistence.Table;
 
 @Entity
 @Table(name = "group")
 public class Group {
     @Id
-    @Column(name = "id")
+    @Column(name = "id", nullable = false)
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
     @Column(name = "name", nullable = false)
     private String name;
 
-    @OneToOne(mappedBy = "group")
+    @OneToOne(cascade = CascadeType.ALL, mappedBy = "group")
     private Student student;
-
-    public Group() {
-    }
-
-    public Group(int id) {
-        this.id = id;
-    }
-
-    public Group(String name) {
-        this.name = name;
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
 
     public String getName() {
         return name;
@@ -49,14 +37,6 @@ public class Group {
 
     public void setStudent(Student student) {
         this.student = student;
-    }
-
-    @Override
-    public String toString() {
-        return "Group{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", student='" + student.getName() + '\'' +
-                '}';
+        student.setGroup(this);
     }
 }
