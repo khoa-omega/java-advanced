@@ -1,6 +1,15 @@
 package com.vti.entity;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.DiscriminatorColumn;
+import javax.persistence.DiscriminatorType;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Inheritance;
+import javax.persistence.InheritanceType;
+import javax.persistence.Table;
 
 @Entity
 @Table(name = "shape")
@@ -8,19 +17,12 @@ import javax.persistence.*;
 @DiscriminatorColumn(name = "type", discriminatorType = DiscriminatorType.STRING)
 public class Shape {
     @Id
-    @Column(name = "id")
+    @Column(name = "id", nullable = false)
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     protected int id;
 
     @Column(name = "name", length = 50, nullable = false)
     protected String name;
-
-    public Shape() {
-    }
-
-    public Shape(String name) {
-        this.name = name;
-    }
 
     public int getId() {
         return id;

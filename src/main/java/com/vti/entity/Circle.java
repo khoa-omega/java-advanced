@@ -8,21 +8,13 @@ import javax.persistence.Entity;
 @DiscriminatorValue(value = "circle")
 public class Circle extends Shape {
     @Column(name = "radius")
-    private double radius;
+    private int radius;
 
-    public Circle() {
-    }
-
-    public Circle(String name, double radius) {
-        super(name);
-        this.radius = radius;
-    }
-
-    public double getRadius() {
+    public int getRadius() {
         return radius;
     }
 
-    public void setRadius(double radius) {
+    public void setRadius(int radius) {
         this.radius = radius;
     }
 
