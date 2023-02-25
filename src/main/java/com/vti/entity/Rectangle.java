@@ -1,42 +1,37 @@
 package com.vti.entity;
 
-import javax.persistence.*;
+import javax.persistence.AttributeOverride;
+import javax.persistence.AttributeOverrides;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Table;
 
 @Entity
 @Table(name = "rectangle")
 @AttributeOverrides(value = {
-        @AttributeOverride(name = "id", column = @Column(name = "id")),
-        @AttributeOverride(name = "name", column = @Column(name = "name"))
+        @AttributeOverride(name = "id", column = @Column(name = "id", length = 50, nullable = false)),
+        @AttributeOverride(name = "name", column = @Column(name = "name", length = 50, nullable = false))
 })
 public class Rectangle extends Shape {
-    @Column(name = "width")
-    private double width;
+    @Column(name = "width", nullable = false)
+    private int width;
 
-    @Column(name = "height")
-    private double height;
+    @Column(name = "height", nullable = false)
+    private int height;
 
-    public Rectangle() {
-    }
-
-    public Rectangle(String name, double width, double height) {
-        super(name);
-        this.width = width;
-        this.height = height;
-    }
-
-    public double getWidth() {
+    public int getWidth() {
         return width;
     }
 
-    public void setWidth(double width) {
+    public void setWidth(int width) {
         this.width = width;
     }
 
-    public double getHeight() {
+    public int getHeight() {
         return height;
     }
 
-    public void setHeight(double height) {
+    public void setHeight(int height) {
         this.height = height;
     }
 

@@ -1,30 +1,26 @@
 package com.vti.entity;
 
-import javax.persistence.*;
+import javax.persistence.AttributeOverride;
+import javax.persistence.AttributeOverrides;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Table;
 
 @Entity
 @Table(name = "circle")
 @AttributeOverrides(value = {
-        @AttributeOverride(name = "id", column = @Column(name = "id")),
-        @AttributeOverride(name = "name", column = @Column(name = "name"))
+        @AttributeOverride(name = "id", column = @Column(name = "id", length = 50, nullable = false)),
+        @AttributeOverride(name = "name", column = @Column(name = "name", length = 50, nullable = false))
 })
 public class Circle extends Shape {
-    @Column(name = "radius")
-    private double radius;
+    @Column(name = "radius", nullable = false)
+    private int radius;
 
-    public Circle() {
-    }
-
-    public Circle(String name, double radius) {
-        super(name);
-        this.radius = radius;
-    }
-
-    public double getRadius() {
+    public int getRadius() {
         return radius;
     }
 
-    public void setRadius(double radius) {
+    public void setRadius(int radius) {
         this.radius = radius;
     }
 
