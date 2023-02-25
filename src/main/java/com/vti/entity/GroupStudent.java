@@ -2,42 +2,47 @@ package com.vti.entity;
 
 import org.hibernate.annotations.CreationTimestamp;
 
-import javax.persistence.*;
-import java.time.LocalDate;
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.EmbeddedId;
+import javax.persistence.Entity;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.MapsId;
+import javax.persistence.PrePersist;
+import javax.persistence.Table;
+import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "group_student")
 public class GroupStudent {
     @EmbeddedId
-    private GroupStudentPK id;
+    private GroupStudentPK pk;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "group_id", referencedColumnName = "id", nullable = false)
     @MapsId(value = "group_id")
-    @JoinColumn(name = "group_id")
     private Group group;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "student_id", referencedColumnName = "id", nullable = false)
     @MapsId(value = "student_id")
-    @JoinColumn(name = "student_id")
     private Student student;
 
-    @Column(name = "joined_date", nullable = false)
+    @Column(name = "joined_at", nullable = false, updatable = false)
     @CreationTimestamp
-    private LocalDate joinedDate;
+    private LocalDateTime joinedAt;
 
-    public GroupStudent() {
+    @PrePersist
+    public void prePersist() {
+        GroupStudentPK pk = new GroupStudentPK();
+        pk.setStudentId(student.getId());
+        pk.setGroupId(group.getId());
+        this.pk = pk;
     }
 
-    public GroupStudent(GroupStudentPK id) {
-        this.id = id;
-    }
-
-    public GroupStudentPK getId() {
-        return id;
-    }
-
-    public void setId(GroupStudentPK id) {
-        this.id = id;
+    public void setPk(GroupStudentPK pk) {
+        this.pk = pk;
     }
 
     public Group getGroup() {
@@ -54,13 +59,5 @@ public class GroupStudent {
 
     public void setStudent(Student student) {
         this.student = student;
-    }
-
-    public LocalDate getJoinedDate() {
-        return joinedDate;
-    }
-
-    public void setJoinedDate(LocalDate joinedDate) {
-        this.joinedDate = joinedDate;
     }
 }

@@ -14,14 +14,6 @@ public class GroupStudentPK implements Serializable {
     @Column(name = "student_id", nullable = false)
     private int studentId;
 
-    public GroupStudentPK() {
-    }
-
-    public GroupStudentPK(int groupId, int studentId) {
-        this.groupId = groupId;
-        this.studentId = studentId;
-    }
-
     public int getGroupId() {
         return groupId;
     }
@@ -36,13 +28,5 @@ public class GroupStudentPK implements Serializable {
 
     public void setStudentId(int studentId) {
         this.studentId = studentId;
-    }
-
-    @Override
-    public String toString() {
-        return "GroupStudentPK{" +
-                "groupId=" + groupId +
-                ", studentId=" + studentId +
-                '}';
     }
 }
