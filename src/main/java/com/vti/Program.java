@@ -20,10 +20,14 @@ public class Program {
         studentB.setName("Nguyễn Ngọc Minh Trang");
 
         Group groupA = new Group();
-        groupA.setName("Android");
-        groupA.setStudents(Arrays.asList(studentA, studentB));
+        groupA.setName("iOS");
+
+        Group groupB = new Group();
+        groupB.setName("Android");
+        groupB.setStudents(Arrays.asList(studentA, studentB));
 
         repository.create(groupA);
+        repository.create(groupB);
 
         System.out.println("-------------------- FIND ALL --------------------");
 

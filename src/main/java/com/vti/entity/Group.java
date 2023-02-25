@@ -18,7 +18,7 @@ public class Group {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    @Column(name = "name", nullable = false)
+    @Column(name = "name", length = 50, unique = true, nullable = false)
     private String name;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "group")
