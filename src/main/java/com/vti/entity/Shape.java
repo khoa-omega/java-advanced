@@ -7,19 +7,11 @@ import javax.persistence.MappedSuperclass;
 @MappedSuperclass
 public class Shape {
     @Id
-    @Column(name = "id")
+    @Column(name = "id", nullable = false)
     protected int id;
 
     @Column(name = "name", length = 50, nullable = false)
     protected String name;
-
-    public Shape() {
-    }
-
-    public Shape(int id, String name) {
-        this.id = id;
-        this.name = name;
-    }
 
     public int getId() {
         return id;

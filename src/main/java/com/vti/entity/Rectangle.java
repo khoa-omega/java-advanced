@@ -7,34 +7,25 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "rectangle")
 public class Rectangle extends Shape {
-    @Column(name = "width")
-    private double width;
+    @Column(name = "width", nullable = false)
+    private int width;
 
-    @Column(name = "height")
-    private double height;
+    @Column(name = "height", nullable = false)
+    private int height;
 
-    public Rectangle() {
-    }
-
-    public Rectangle(int id, String name, double width, double height) {
-        super(id, name);
-        this.width = width;
-        this.height = height;
-    }
-
-    public double getWidth() {
+    public int getWidth() {
         return width;
     }
 
-    public void setWidth(double width) {
+    public void setWidth(int width) {
         this.width = width;
     }
 
-    public double getHeight() {
+    public int getHeight() {
         return height;
     }
 
-    public void setHeight(double height) {
+    public void setHeight(int height) {
         this.height = height;
     }
 

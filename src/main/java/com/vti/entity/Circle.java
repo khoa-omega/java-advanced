@@ -7,22 +7,14 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "circle")
 public class Circle extends Shape {
-    @Column(name = "radius")
-    private double radius;
+    @Column(name = "radius", nullable = false)
+    private int radius;
 
-    public Circle() {
-    }
-
-    public Circle(int id, String name, double radius) {
-        super(id, name);
-        this.radius = radius;
-    }
-
-    public double getRadius() {
+    public int getRadius() {
         return radius;
     }
 
-    public void setRadius(double radius) {
+    public void setRadius(int radius) {
         this.radius = radius;
     }
 

@@ -11,26 +11,37 @@ public class Program {
     public static void main(String[] args) {
         ShapeRepository repository = new ShapeRepository();
 
-        // Create circles
-        repository.createCircle(new Circle(1, "Circle", 10));
-        repository.createCircle(new Circle(2, "Circle", 20));
-        repository.createCircle(new Circle(3, "Circle", 30));
+        System.out.println("-------------------- CREATE --------------------");
 
-        // Create rectangles
-        repository.createRectangle(new Rectangle(4, "Rectangle", 10, 10));
-        repository.createRectangle(new Rectangle(5, "Rectangle", 20, 20));
-        repository.createRectangle(new Rectangle(6, "Rectangle", 30, 30));
+        Circle circleA = new Circle();
+        circleA.setId(1);
+        circleA.setName("Red circle");
+        circleA.setRadius(5);
+        repository.create(circleA);
 
-        // Show all circles
-        List<Circle> circles = repository.getAllCircles();
+        Circle circleB = new Circle();
+        circleB.setId(2);
+        circleB.setName("Green circle");
+        circleB.setRadius(10);
+        repository.create(circleB);
+
+        Rectangle rectangleA = new Rectangle();
+        rectangleA.setId(3);
+        rectangleA.setName("Blue rectangle");
+        rectangleA.setWidth(15);
+        rectangleA.setHeight(20);
+        repository.create(rectangleA);
+
+        System.out.println("-------------------- FIND ALL --------------------");
+
+        List<Circle> circles = repository.findAllCircles();
         for (Circle circle : circles) {
-            System.out.println("circle = " + circle);
+            System.out.println("- circle = " + circle);
         }
 
-        // Show all rectangles
-        List<Rectangle> rectangles = repository.getAllRectangles();
+        List<Rectangle> rectangles = repository.findAllRectangles();
         for (Rectangle rectangle : rectangles) {
-            System.out.println("rectangle = " + rectangle);
+            System.out.println("+ rectangle = " + rectangle);
         }
 
         HibernateUtils.closeFactory();
