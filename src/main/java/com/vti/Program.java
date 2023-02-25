@@ -11,53 +11,57 @@ public class Program {
     public static void main(String[] args) {
         DepartmentRepository repository = new DepartmentRepository();
 
-        // Create departments
-        System.out.println("------------ Create departments ------------");
-        repository.create(new Department("SQL"));
-        repository.create(new Department("Java Basic"));
-        repository.create(new Department("Frontend Basic"));
-        repository.create(new Department("Java Advanced"));
+        System.out.println("-------------------- CREATE --------------------");
 
-        // Count all departments
-        System.out.println("------------ Count all departments ------------");
-        System.out.println("count = " + repository.countAll());
+        Department departmentA = new Department();
+        departmentA.setName("Giám đốc");
+        repository.create(departmentA);
 
-        // Get all departments
-        System.out.println("------------ Get all departments ------------");
-        List<Department> departments = repository.getAll();
+        Department departmentB = new Department();
+        departmentB.setName("Bảo vệ");
+        repository.create(departmentB);
+
+        System.out.println("-------------------- COUNT BY ID --------------------");
+
+        System.out.println("count by id = " + repository.countById());
+
+        System.out.println("-------------------- FIND ALL --------------------");
+
+        List<Department> departments = repository.findAll();
         for (Department department : departments) {
-            System.out.println("department = " + department);
+            System.out.println("- department = " + department);
         }
 
-        // Get all departments with dto
-        System.out.println("------------ Get all departments with dto ------------");
-        List<DepartmentDTO> departmentDTOs = repository.getAllWithDTOs();
+        System.out.println("-------------------- FIND ALL USING DTO --------------------");
+
+        List<DepartmentDTO> departmentDTOs = repository.findAllUsingDTO();
         for (DepartmentDTO departmentDTO : departmentDTOs) {
-            System.out.println("departmentDTO = " + departmentDTO);
+            System.out.println("- department dto = " + departmentDTO);
         }
 
-        // Get all departments with paging
-        System.out.println("------------ Get all departments with paging ------------");
-        for (Department department : repository.getAllWithPaging(2, 2)) {
-            System.out.println("department = " + department);
+        System.out.println("-------------------- FIND ALL WITH PAGING --------------------");
+
+        for (Department department : repository.findAllWithPaging(2, 1)) {
+            System.out.println("+ department paging = " + department);
         }
 
-        // Get department by id
-        System.out.println("------------ Get department by id ------------");
-        System.out.println("repository.getById(2) = " + repository.getById(2));
+        System.out.println("-------------------- FIND BY ID --------------------");
 
-        // Update department
-        System.out.println("------------ Update department ------------");
-        repository.update(new Department(2, "New Java Basic"));
+        System.out.println("+ department (id = 2) = " + repository.findById(2));
 
-        // Delete department
-        System.out.println("------------ Delete department ------------");
+        System.out.println("-------------------- UPDATE --------------------");
+
+        departmentB.setName("Kinh doanh");
+        repository.update(departmentB);
+
+        System.out.println("-------------------- DELETE BY ID --------------------");
+
         repository.deleteById(1);
 
-        // Get all departments
-        System.out.println("------------ Get all departments ------------");
-        for (Department department : repository.getAll()) {
-            System.out.println("department = " + department);
+        System.out.println("-------------------- FIND ALL --------------------");
+
+        for (Department department : repository.findAll()) {
+            System.out.println("+ department = " + department);
         }
 
         HibernateUtils.closeFactory();
