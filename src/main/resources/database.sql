@@ -1,2 +1,2 @@
-DROP DATABASE IF EXISTS shape_manager;
-CREATE DATABASE shape_manager;
+DROP DATABASE IF EXISTS shape_management;
+CREATE DATABASE shape_management;
