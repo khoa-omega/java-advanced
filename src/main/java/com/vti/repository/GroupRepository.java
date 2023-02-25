@@ -22,4 +22,12 @@ public class GroupRepository {
             session.getTransaction().commit();
         }
     }
+
+    public void update(Group group) {
+        try (Session session = HibernateUtils.openSession()) {
+            session.beginTransaction();
+            session.merge(group);
+            session.getTransaction().commit();
+        }
+    }
 }

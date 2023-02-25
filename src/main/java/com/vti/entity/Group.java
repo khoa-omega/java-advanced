@@ -16,21 +16,13 @@ public class Group {
     @Id
     @Column(name = "id", nullable = false)
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    private int id;
 
-    @Column(name = "name", length = 50, unique = true, nullable = false)
+    @Column(name = "name", nullable = false)
     private String name;
 
-    @OneToMany(mappedBy = "group", cascade = CascadeType.ALL)
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "group")
     private List<Student> students;
-
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
 
     public String getName() {
         return name;
@@ -46,5 +38,8 @@ public class Group {
 
     public void setStudents(List<Student> students) {
         this.students = students;
+        for (Student student : students) {
+            student.setGroup(this);
+        }
     }
 }
