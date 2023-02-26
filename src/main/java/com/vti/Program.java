@@ -23,36 +23,35 @@ public class Program {
 
         System.out.println("-------------------- COUNT BY ID --------------------");
 
-        System.out.println("count by id = " + repository.countById());
+        System.out.println("- count by id = " + repository.countById());
 
         System.out.println("-------------------- FIND ALL --------------------");
 
-        List<Department> departments = repository.findAll();
-        for (Department department : departments) {
-            System.out.println("- department = " + department);
+        for (Department department : repository.findAll()) {
+            System.out.println("+ department = " + department);
         }
 
         System.out.println("-------------------- FIND ALL USING DTO --------------------");
 
-        List<DepartmentDTO> departmentDTOs = repository.findAllUsingDTO();
-        for (DepartmentDTO departmentDTO : departmentDTOs) {
-            System.out.println("- department dto = " + departmentDTO);
+        for (DepartmentDTO dto : repository.findAllUsingDTO()) {
+            System.out.println("- department dto = " + dto);
         }
 
         System.out.println("-------------------- FIND ALL WITH PAGING --------------------");
 
         for (Department department : repository.findAllWithPaging(2, 1)) {
-            System.out.println("+ department paging = " + department);
+            System.out.println("+ department (page = 2, size = 1) = " + department);
         }
 
         System.out.println("-------------------- FIND BY ID --------------------");
 
-        System.out.println("+ department (id = 2) = " + repository.findById(2));
+        Department departmentC = repository.findById(2);
+        System.out.println("- department (id = 2) = " + departmentC);
 
         System.out.println("-------------------- UPDATE --------------------");
 
-        departmentB.setName("Kinh doanh");
-        repository.update(departmentB);
+        departmentC.setName("Kinh doanh");
+        repository.update(departmentC);
 
         System.out.println("-------------------- DELETE BY ID --------------------");
 
