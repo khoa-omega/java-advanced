@@ -20,7 +20,7 @@ public class Program {
         departmentB.setName("Bảo vệ");
         repository.create(departmentB);
 
-        System.out.println("-------------------- FIND ALL USING SQL --------------------");
+        System.out.println("-------------------- FIND BY NAME LIKE --------------------");
 
         List<Department> departments = repository.findByNameLike("B");
         for (Department department : departments) {
