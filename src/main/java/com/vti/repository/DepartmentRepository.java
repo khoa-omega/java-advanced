@@ -8,27 +8,10 @@ import org.hibernate.Session;
 import java.util.List;
 
 public class DepartmentRepository {
-    public List<Department> findAll() {
-        try (Session session = HibernateUtils.openSession()) {
-            return session
-                    .createQuery("FROM Department", Department.class)
-                    .getResultList();
-        }
-    }
-
     public List<Department> findAllUsingSQL() {
         try (Session session = HibernateUtils.openSession()) {
             return session
                     .createNativeQuery("SELECT * FROM department", Department.class)
-                    .getResultList();
-        }
-    }
-
-    public List<DepartmentDTO> findAllUsingDTO() {
-        try (Session session = HibernateUtils.openSession()) {
-            String hql = "SELECT new com.vti.dto.DepartmentDTO(name) FROM Department";
-            return session
-                    .createQuery(hql, DepartmentDTO.class)
                     .getResultList();
         }
     }
@@ -43,9 +26,29 @@ public class DepartmentRepository {
         }
     }
 
+    public List<DepartmentDTO> findAllUsingDTO() {
+        try (Session session = HibernateUtils.openSession()) {
+            String hql = "SELECT new com.vti.dto.DepartmentDTO(name) FROM Department";
+            return session
+                    .createQuery(hql, DepartmentDTO.class)
+                    .getResultList();
+        }
+    }
+
+    public List<Department> findAll() {
+        try (Session session = HibernateUtils.openSession()) {
+            return session
+                    .createQuery("FROM Department", Department.class)
+                    .getResultList();
+        }
+    }
+
     public Department findById(int id) {
         try (Session session = HibernateUtils.openSession()) {
-            return session.get(Department.class, id);
+            return session
+                    .createQuery("FROM Department WHERE id = :id", Department.class)
+                    .setParameter("id", id)
+                    .uniqueResult();
         }
     }
 
@@ -69,7 +72,10 @@ public class DepartmentRepository {
     public void update(Department department) {
         try (Session session = HibernateUtils.openSession()) {
             session.beginTransaction();
-            session.merge(department);
+            session.createQuery("UPDATE Department SET name = :name WHERE id = :id", Department.class)
+                    .setParameter("name", department.getName())
+                    .setParameter("id", department.getId())
+                    .executeUpdate();
             session.getTransaction().commit();
         }
     }
@@ -77,8 +83,9 @@ public class DepartmentRepository {
     public void deleteById(int id) {
         try (Session session = HibernateUtils.openSession()) {
             session.beginTransaction();
-            Department department = session.get(Department.class, id);
-            session.remove(department);
+            session.createQuery("DELETE FROM Department WHERE id = :id")
+                    .setParameter("id", id)
+                    .executeUpdate();
             session.getTransaction().commit();
         }
     }
